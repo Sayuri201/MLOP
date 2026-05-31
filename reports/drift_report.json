@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-31T12:34:01.939849",
+  "timestamp": "2026-05-31T12:35:47.926638",
   "threshold": 0.05,
   "features": {
     "Gender": {
@@ -8,18 +8,18 @@
       "drift_detected": false
     },
     "Age": {
-      "ks_statistic": 0.11129349967170059,
-      "p_value": 0.8476888041664321,
+      "ks_statistic": 0.10841423948220065,
+      "p_value": 0.8680765530090968,
       "drift_detected": false
     },
     "Height": {
-      "ks_statistic": 0.10658005815589532,
-      "p_value": 0.88052074663782,
+      "ks_statistic": 0.11389274156264448,
+      "p_value": 0.8279952872124173,
       "drift_detected": false
     },
     "Weight": {
-      "ks_statistic": 0.08451364787543382,
-      "p_value": 0.9797263729101671,
+      "ks_statistic": 0.08099861303744799,
+      "p_value": 0.9867544170759635,
       "drift_detected": false
     },
     "family_history_with_overweight": {
@@ -33,13 +33,13 @@
       "drift_detected": false
     },
     "FCVC": {
-      "ks_statistic": 0.059023543757621234,
-      "p_value": 0.9998744272018475,
+      "ks_statistic": 0.06215903837263061,
+      "p_value": 0.9996645329724714,
       "drift_detected": false
     },
     "NCP": {
-      "ks_statistic": 0.07776006003189194,
-      "p_value": 0.9915748809564843,
+      "ks_statistic": 0.07591308368007398,
+      "p_value": 0.9936187381061582,
       "drift_detected": false
     },
     "CAEC": {
@@ -53,8 +53,8 @@
       "drift_detected": false
     },
     "CH2O": {
-      "ks_statistic": 0.1709267423318638,
-      "p_value": 0.3561647034038703,
+      "ks_statistic": 0.1617891816920943,
+      "p_value": 0.42229154534114566,
       "drift_detected": false
     },
     "SCC": {
@@ -63,13 +63,13 @@
       "drift_detected": false
     },
     "FAF": {
-      "ks_statistic": 0.09089203639433449,
-      "p_value": 0.9611192541758152,
+      "ks_statistic": 0.09338881183541378,
+      "p_value": 0.9514929632120348,
       "drift_detected": false
     },
     "TUE": {
-      "ks_statistic": 0.12337022793358972,
-      "p_value": 0.7506469580570426,
+      "ks_statistic": 0.1175913083680074,
+      "p_value": 0.7988210083156083,
       "drift_detected": false
     },
     "CALC": {
@@ -84,7 +84,7 @@
     },
     "BMI": {
       "ks_statistic": 1.0,
-      "p_value": 3.5852146708591147e-60,
+      "p_value": 2.408481600504335e-60,
       "drift_detected": true
     }
   },
