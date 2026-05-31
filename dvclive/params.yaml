@@ -1,0 +1,6 @@
+epochs: 100
+batch_size: 32
+lr: 0.001
+num_classes: 7
+n_features: 17
+model_type: MLP
