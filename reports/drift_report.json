@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-31T12:49:09.730562",
+  "timestamp": "2026-05-31T13:59:04.497730",
   "threshold": 0.05,
   "features": {
     "Gender": {
@@ -8,18 +8,18 @@
       "drift_detected": false
     },
     "Age": {
-      "ks_statistic": 0.16976845784185235,
-      "p_value": 0.5327390519492398,
+      "ks_statistic": 0.17594834543987087,
+      "p_value": 0.48808165832862227,
       "drift_detected": false
     },
     "Height": {
-      "ks_statistic": 0.19344692005242464,
-      "p_value": 0.3712042291062253,
+      "ks_statistic": 0.19269572235673932,
+      "p_value": 0.3761407532668264,
       "drift_detected": false
     },
     "Weight": {
-      "ks_statistic": 0.08326780253385759,
-      "p_value": 0.9962060698534265,
+      "ks_statistic": 0.07929782082324455,
+      "p_value": 0.998081028888653,
       "drift_detected": false
     },
     "family_history_with_overweight": {
@@ -33,13 +33,13 @@
       "drift_detected": false
     },
     "FCVC": {
-      "ks_statistic": 0.3833988641328091,
-      "p_value": 0.0029897398667462338,
+      "ks_statistic": 0.3813559322033898,
+      "p_value": 0.0032114708273686425,
       "drift_detected": true
     },
     "NCP": {
-      "ks_statistic": 0.236784622105723,
-      "p_value": 0.16583415501576046,
+      "ks_statistic": 0.23506860371267152,
+      "p_value": 0.1719153050956328,
       "drift_detected": false
     },
     "CAEC": {
@@ -53,8 +53,8 @@
       "drift_detected": false
     },
     "CH2O": {
-      "ks_statistic": 0.27889908256880735,
-      "p_value": 0.06428574426952283,
+      "ks_statistic": 0.2764326069410815,
+      "p_value": 0.06831857056135852,
       "drift_detected": false
     },
     "SCC": {
@@ -63,13 +63,13 @@
       "drift_detected": false
     },
     "FAF": {
-      "ks_statistic": 0.27557885539536914,
-      "p_value": 0.06966776138683577,
+      "ks_statistic": 0.27461662631154155,
+      "p_value": 0.07137551992492154,
       "drift_detected": false
     },
     "TUE": {
-      "ks_statistic": 0.20262123197903015,
-      "p_value": 0.31764848677613067,
+      "ks_statistic": 0.19612590799031476,
+      "p_value": 0.3553247634491323,
       "drift_detected": false
     },
     "CALC": {
@@ -83,17 +83,16 @@
       "drift_detected": false
     },
     "BMI": {
-      "ks_statistic": 1.0,
-      "p_value": 2.913460764699934e-48,
-      "drift_detected": true
+      "ks_statistic": 0.0903954802259887,
+      "p_value": 0.9898316608217584,
+      "drift_detected": false
     }
   },
   "drifted_features": [
-    "FCVC",
-    "BMI"
+    "FCVC"
   ],
-  "n_drifted": 2,
+  "n_drifted": 1,
   "n_total": 17,
-  "drift_ratio": 0.11764705882352941,
+  "drift_ratio": 0.058823529411764705,
   "overall_drift": false
 }

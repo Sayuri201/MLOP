@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><title>Monitoring Report — 2026-05-31T12:49:09.730562</title>
+<head><title>Monitoring Report — 2026-05-31T13:59:04.497730</title>
 <style>
   body { font-family: Arial, sans-serif; margin: 30px; }
   h1   { color: #333; }
@@ -12,34 +12,34 @@
 </style></head>
 <body>
 <h1>Obesity Classifier — MLOps Monitoring Report</h1>
-<p><b>Generated:</b> 2026-05-31T12:49:09.730562</p>
+<p><b>Generated:</b> 2026-05-31T13:59:04.497730</p>
 <hr>
 <h2>Summary</h2>
 <p>Retrain needed:
-  <span class="bad">
-    YES
+  <span class="ok">
+    NO
   </span>
 </p>
 
 <h2>Data Drift (KS Test)</h2>
 <p>Features checked: 17</p>
-<p>Features drifted: <span class="bad">2</span></p>
-<p>Drift ratio: 11.8%</p>
+<p>Features drifted: <span class="bad">1</span></p>
+<p>Drift ratio: 5.9%</p>
 <p>Overall drift: <span class="ok">False</span></p>
-<h3>Drifted Features</h3><ul><li>FCVC — KS=0.3834, p=0.0030</li><li>BMI — KS=1.0000, p=0.0000</li></ul>
+<h3>Drifted Features</h3><ul><li>FCVC — KS=0.3814, p=0.0032</li></ul>
 <h2>Performance on New Data</h2>
 <table>
 <tr><th>Metric</th><th>Reference (test split)</th><th>New Data</th></tr>
 <tr>
   <td>Accuracy</td>
-  <td>0.9756</td>
-  <td class="bad">0.1429</td>
+  <td>0.9685</td>
+  <td class="ok">0.9524</td>
 </tr>
 <tr>
   <td>F1 Macro</td>
-  <td>0.9754</td>
-  <td>0.0390</td>
+  <td>0.9681</td>
+  <td>0.9510</td>
 </tr>
 </table>
-<p>Accuracy drop: +0.8327  (threshold: 0.05)</p>
+<p>Accuracy drop: +0.0161  (threshold: 0.05)</p>
 </body></html>
