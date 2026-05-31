@@ -8,9 +8,12 @@ venv/
 
 # DVC - actual data files (tracked by DVC, not git)
 /train/train.csv
+/train/train_backup*.csv
+/train/train_combined*.csv
 /test/test.csv
 /models/
 /artifacts/
+/data/processed/
 
 # Logs
 logs/*.log
