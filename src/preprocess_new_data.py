@@ -104,6 +104,48 @@ logs.append(log_entry)
 with open(log_path, "w") as f:
     json.dump(logs, f, indent=2)
 
+# ── Save X_new.npy for monitor.py drift detection ────────────────────────────
+import json, joblib
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+if os.path.exists("artifacts/preprocessing/feature_columns.json"):
+    with open("artifacts/preprocessing/feature_columns.json") as f:
+        feature_columns = json.load(f)
+
+    freq_maps = {}
+    if os.path.exists("artifacts/preprocessing/freq_maps.json"):
+        with open("artifacts/preprocessing/freq_maps.json") as f:
+            freq_maps = json.load(f)
+
+    df_encoded = df_new.copy()
+    if "y" in df_encoded.columns:
+        df_encoded = df_encoded.drop("y", axis=1)
+
+    cat_cols = [c for c in df_encoded.columns if df_encoded[c].dtype == "O"]
+    for col in cat_cols:
+        if col in freq_maps:
+            df_encoded[f"{col}_freq"] = df_encoded[col].map(freq_maps[col]).fillna(0)
+        else:
+            df_encoded[f"{col}_freq"] = 0
+    df_encoded = df_encoded.drop(cat_cols, axis=1)
+
+    for col in feature_columns:
+        if col not in df_encoded.columns:
+            df_encoded[col] = 0.0
+    df_encoded = df_encoded[feature_columns].apply(pd.to_numeric, errors="coerce").fillna(0)
+
+    if os.path.exists("artifacts/preprocessing/scaler.pkl"):
+        scaler = joblib.load("artifacts/preprocessing/scaler.pkl")
+        X_new  = scaler.transform(df_encoded.values)
+    else:
+        X_new = df_encoded.values
+
+    X_new = X_new.reshape(X_new.shape[0], X_new.shape[1], 1)
+    os.makedirs("artifacts/data", exist_ok=True)
+    np.save("artifacts/data/X_new.npy", X_new)
+    print(f"Saved: artifacts/data/X_new.npy  {X_new.shape}")
+
 print("\n" + "=" * 60)
 print("PREPROCESSING COMPLETE")
 print("=" * 60)

@@ -27,8 +27,8 @@ TEST_SIZE    = params["data"]["test_size"]
 
 # ── Check required files ──────────────────────────────────────────────────────
 required = [
-    "artifacts/X_test_cnn.npy",
-    "artifacts/y_test.npy",
+    "artifacts/data/X_test.npy",
+    "artifacts/data/y_test.npy",
     "artifacts/training_history.json",
     "artifacts/feature_columns.json",
     "artifacts/preprocessing/encoder.pkl",
@@ -43,8 +43,8 @@ for path in required:
 # ── Load model, encoder, and test data ───────────────────────────────────────
 print("Loading model and test data...")
 model      = tf.keras.models.load_model("models/model.keras")
-X_test_cnn = np.load("artifacts/X_test_cnn.npy")
-y_test     = np.load("artifacts/y_test.npy")
+X_test_cnn = np.load("artifacts/data/X_test.npy")
+y_test     = np.load("artifacts/data/y_test.npy")
 le         = joblib.load("artifacts/preprocessing/encoder.pkl")
 class_names = list(le.classes_)
 
@@ -68,7 +68,8 @@ print(f"  Accuracy  : {acc:.4f}")
 print(f"  F1 Macro  : {f1_macro:.4f}")
 print(f"  F1 Weighted: {f1_weighted:.4f}")
 print(f"\nClassification Report:")
-print(classification_report(y_test, y_pred, target_names=class_names, zero_division=0))
+print(classification_report(y_test, y_pred, target_names=class_names,
+                            labels=list(range(len(class_names))), zero_division=0))
 
 os.makedirs("artifacts", exist_ok=True)
 os.makedirs("reports",   exist_ok=True)
@@ -113,7 +114,8 @@ plt.close()
 print("Saved: training_history.png")
 
 # ── Per-class F1 chart ────────────────────────────────────────────────────────
-f1_per_class = f1_score(y_test, y_pred, average=None, zero_division=0)
+f1_per_class = f1_score(y_test, y_pred, average=None,
+                        labels=list(range(len(class_names))), zero_division=0)
 fig, ax = plt.subplots(figsize=(10, 5))
 bars = ax.bar(class_names, f1_per_class, color="steelblue", edgecolor="black")
 ax.set_ylim(0, 1.05)
@@ -160,7 +162,8 @@ with open("artifacts/metrics/evaluation_metrics.json", "w") as f:
     json.dump(metrics_out, f, indent=2)
 
 # ── metrics.txt (human readable) ─────────────────────────────────────────────
-report_str = classification_report(y_test, y_pred, target_names=class_names, zero_division=0)
+report_str = classification_report(y_test, y_pred, target_names=class_names,
+                                   labels=list(range(len(class_names))), zero_division=0)
 with open("metrics.txt", "w") as f:
     f.write("=" * 55 + "\n")
     f.write("OBESITY CLASSIFICATION — MODEL METRICS\n")

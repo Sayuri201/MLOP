@@ -142,13 +142,11 @@ print("Saved: artifacts/preprocessing/scaler.pkl")
 X_train_cnn = X_train_scaled.reshape(X_train_scaled.shape[0], X_train_scaled.shape[1], 1)
 X_test_cnn  = X_test_scaled.reshape(X_test_scaled.shape[0],  X_test_scaled.shape[1],  1)
 
-np.save("artifacts/X_test_cnn.npy",           X_test_cnn)
-np.save("artifacts/y_test.npy",               y_test)
-np.save("artifacts/data/X_train_cnn.npy",     X_train_cnn)
-np.save("artifacts/data/X_test_cnn.npy",      X_test_cnn)
-np.save("artifacts/data/y_train.npy",         y_train)
-np.save("artifacts/data/y_test.npy",          y_test)
-print("Saved CNN arrays to artifacts/")
+np.save("artifacts/data/X_train.npy", X_train_cnn)
+np.save("artifacts/data/X_test.npy",  X_test_cnn)
+np.save("artifacts/data/y_train.npy", y_train)
+np.save("artifacts/data/y_test.npy",  y_test)
+print("Saved arrays to artifacts/data/")
 
 # ── Build 1D CNN classifier ───────────────────────────────────────────────────
 tf.random.set_seed(SEED)
@@ -268,7 +266,8 @@ y_pred       = np.argmax(y_pred_proba, axis=1)
 test_acc     = float(accuracy_score(y_test, y_pred))
 
 print(f"\nTest Accuracy: {test_acc:.4f}")
-print(classification_report(y_test, y_pred, target_names=le.classes_))
+print(classification_report(y_test, y_pred, target_names=le.classes_,
+                            labels=list(range(len(le.classes_))), zero_division=0))
 
 test_metrics = {
     "accuracy":  test_acc,

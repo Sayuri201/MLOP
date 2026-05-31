@@ -54,9 +54,9 @@ def load_artifacts():
     """Load model, encoder, scaler, feature columns, and reference data."""
     required = [
         "models/model.keras",
-        "artifacts/data/X_train_cnn.npy",
+        "artifacts/data/X_train.npy",
         "artifacts/data/y_train.npy",
-        "artifacts/data/X_test_cnn.npy",
+        "artifacts/data/X_test.npy",
         "artifacts/data/y_test.npy",
         "artifacts/preprocessing/freq_maps.json",
         "artifacts/preprocessing/feature_columns.json",
@@ -87,9 +87,9 @@ def load_artifacts():
         "model":           model,
         "le":              le,
         "class_names":     class_names,
-        "X_train":         np.load("artifacts/data/X_train_cnn.npy"),
+        "X_train":         np.load("artifacts/data/X_train.npy"),
         "y_train":         np.load("artifacts/data/y_train.npy"),
-        "X_test":          np.load("artifacts/data/X_test_cnn.npy"),
+        "X_test":          np.load("artifacts/data/X_test.npy"),
         "y_test":          np.load("artifacts/data/y_test.npy"),
         "freq_maps":       freq_maps,
         "feature_columns": feature_columns,

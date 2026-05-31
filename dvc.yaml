@@ -2,67 +2,63 @@ stages:
   train:
     cmd: python src/model.py
     deps:
-      - src/model.py
-      - params.yaml
-      - train/train.csv
-      - test/test.csv
+    - src/model.py
+    - params.yaml
+    - train/train.csv
+    - test/test.csv
     params:
-      - data
-      - model
-      - callbacks
+    - data
+    - model
+    - callbacks
     outs:
-      - models/model.keras
-      - artifacts/X_test_cnn.npy
-      - artifacts/y_test.npy
-      - artifacts/training_history.json
-      - artifacts/feature_columns.json
-      - artifacts/preprocessing/scaler.pkl
-      - artifacts/preprocessing/encoder.pkl
-      - artifacts/preprocessing/feature_columns.json
-      - artifacts/preprocessing/freq_maps.json
-      - artifacts/preprocessing/class_names.json
-      - artifacts/data/X_train_cnn.npy
-      - artifacts/data/X_test_cnn.npy
-      - artifacts/data/y_train.npy
-      - artifacts/data/y_test.npy
-      - artifacts/metadata/model_info.json
+    - models/model.keras
+    - artifacts/training_history.json
+    - artifacts/feature_columns.json
+    - artifacts/preprocessing/scaler.pkl
+    - artifacts/preprocessing/encoder.pkl
+    - artifacts/preprocessing/feature_columns.json
+    - artifacts/preprocessing/freq_maps.json
+    - artifacts/preprocessing/class_names.json
+    - artifacts/data/X_train.npy
+    - artifacts/data/X_test.npy
+    - artifacts/data/y_train.npy
+    - artifacts/data/y_test.npy
+    - artifacts/metadata/model_info.json
     metrics:
-      - artifacts/metrics/test_metrics.json:
-          cache: false
+    - artifacts/metrics/test_metrics.json:
+        cache: false
 
   evaluate:
     cmd: python src/evaluate.py
     deps:
-      - src/evaluate.py
-      - params.yaml
-      - models/model.keras
-      - artifacts/X_test_cnn.npy
-      - artifacts/y_test.npy
-      - artifacts/training_history.json
-      - artifacts/feature_columns.json
-      - artifacts/preprocessing/encoder.pkl
-      - artifacts/preprocessing/scaler.pkl
-      - artifacts/preprocessing/freq_maps.json
-      - test/test.csv
+    - src/evaluate.py
+    - params.yaml
+    - models/model.keras
+    - artifacts/data/X_test.npy
+    - artifacts/data/y_test.npy
+    - artifacts/training_history.json
+    - artifacts/feature_columns.json
+    - artifacts/preprocessing/encoder.pkl
+    - artifacts/preprocessing/scaler.pkl
+    - artifacts/preprocessing/freq_maps.json
+    - test/test.csv
     params:
-      - evaluate
+    - evaluate
     outs:
-      - confusion_matrix.png:
-          cache: false
-      - training_history.png:
-          cache: false
-      - per_class_f1.png:
-          cache: false
+    - confusion_matrix.png:
+        cache: false
+    - training_history.png:
+        cache: false
+    - per_class_f1.png:
+        cache: false
     metrics:
-      - metrics.json:
-          cache: false
+    - metrics.json:
+        cache: false
 
 params:
-  - dvclive/params.yaml
-
+- dvclive/params.yaml
 metrics:
-  - dvclive/metrics.json
-
+- dvclive/metrics.json
 plots:
-  - dvclive/plots/metrics:
-      x: step
+- dvclive/plots/metrics:
+    x: step
