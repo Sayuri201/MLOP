@@ -1,106 +1,98 @@
 {
-  "timestamp": "2026-05-31T12:20:50.509913",
+  "timestamp": "2026-05-31T12:22:29.415726",
   "threshold": 0.05,
   "features": {
+    "Gender": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
     "Age": {
-      "ks_statistic": 0.1324404761904762,
-      "p_value": 0.6754775177655455,
+      "ks_statistic": 0.1281112737920937,
+      "p_value": 0.7105591292968456,
       "drift_detected": false
     },
     "Height": {
-      "ks_statistic": 0.12946428571428573,
-      "p_value": 0.7018148974584326,
+      "ks_statistic": 0.12565362894791884,
+      "p_value": 0.732078972185817,
       "drift_detected": false
     },
     "Weight": {
-      "ks_statistic": 0.09672619047619048,
-      "p_value": 0.9389450412280287,
+      "ks_statistic": 0.09563898765948546,
+      "p_value": 0.9423304005866383,
+      "drift_detected": false
+    },
+    "family_history_with_overweight": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "FAVC": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
       "drift_detected": false
     },
     "FCVC": {
-      "ks_statistic": 0.07068452380952381,
-      "p_value": 0.997654679595753,
+      "ks_statistic": 0.06761137837272538,
+      "p_value": 0.9986784276499604,
       "drift_detected": false
     },
     "NCP": {
-      "ks_statistic": 0.09077380952380952,
-      "p_value": 0.9630533610602728,
+      "ks_statistic": 0.09213553649864045,
+      "p_value": 0.9569121178924138,
+      "drift_detected": false
+    },
+    "CAEC": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "SMOKE": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
       "drift_detected": false
     },
     "CH2O": {
-      "ks_statistic": 0.19642857142857142,
-      "p_value": 0.21194117066336088,
+      "ks_statistic": 0.19300355574147668,
+      "p_value": 0.22678437566334073,
+      "drift_detected": false
+    },
+    "SCC": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
       "drift_detected": false
     },
     "FAF": {
-      "ks_statistic": 0.11235119047619048,
-      "p_value": 0.843338446971788,
+      "ks_statistic": 0.11116921146203723,
+      "p_value": 0.8494983124866147,
       "drift_detected": false
     },
     "TUE": {
-      "ks_statistic": 0.15401785714285715,
-      "p_value": 0.4881869603948352,
+      "ks_statistic": 0.1513804643380046,
+      "p_value": 0.5069218893557391,
+      "drift_detected": false
+    },
+    "CALC": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "MTRANS": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
       "drift_detected": false
     },
     "BMI": {
       "ks_statistic": 1.0,
-      "p_value": 1.147402509958784e-58,
-      "drift_detected": true
-    },
-    "Gender_freq": {
-      "ks_statistic": 1.0,
-      "p_value": 1.147402509958784e-58,
-      "drift_detected": true
-    },
-    "family_history_with_overweight_freq": {
-      "ks_statistic": 1.0,
-      "p_value": 1.147402509958784e-58,
-      "drift_detected": true
-    },
-    "FAVC_freq": {
-      "ks_statistic": 1.0,
-      "p_value": 1.147402509958784e-58,
-      "drift_detected": true
-    },
-    "CAEC_freq": {
-      "ks_statistic": 1.0,
-      "p_value": 1.147402509958784e-58,
-      "drift_detected": true
-    },
-    "SMOKE_freq": {
-      "ks_statistic": 1.0,
-      "p_value": 1.147402509958784e-58,
-      "drift_detected": true
-    },
-    "SCC_freq": {
-      "ks_statistic": 1.0,
-      "p_value": 1.147402509958784e-58,
-      "drift_detected": true
-    },
-    "CALC_freq": {
-      "ks_statistic": 1.0,
-      "p_value": 1.147402509958784e-58,
-      "drift_detected": true
-    },
-    "MTRANS_freq": {
-      "ks_statistic": 1.0,
-      "p_value": 1.147402509958784e-58,
+      "p_value": 7.317445356192593e-59,
       "drift_detected": true
     }
   },
   "drifted_features": [
-    "BMI",
-    "Gender_freq",
-    "family_history_with_overweight_freq",
-    "FAVC_freq",
-    "CAEC_freq",
-    "SMOKE_freq",
-    "SCC_freq",
-    "CALC_freq",
-    "MTRANS_freq"
+    "BMI"
   ],
-  "n_drifted": 9,
+  "n_drifted": 1,
   "n_total": 17,
-  "drift_ratio": 0.5294117647058824,
-  "overall_drift": true
+  "drift_ratio": 0.058823529411764705,
+  "overall_drift": false
 }
