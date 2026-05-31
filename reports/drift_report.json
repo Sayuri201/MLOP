@@ -1,0 +1,98 @@
+{
+  "timestamp": "2026-05-31T12:40:54.956657",
+  "threshold": 0.05,
+  "features": {
+    "Gender": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "Age": {
+      "ks_statistic": 0.1141439205955335,
+      "p_value": 0.8260728504664864,
+      "drift_detected": false
+    },
+    "Height": {
+      "ks_statistic": 0.10935838355193193,
+      "p_value": 0.8615064986665567,
+      "drift_detected": false
+    },
+    "Weight": {
+      "ks_statistic": 0.08179723502304148,
+      "p_value": 0.9853936147042271,
+      "drift_detected": false
+    },
+    "family_history_with_overweight": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "FAVC": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "FCVC": {
+      "ks_statistic": 0.06309819213045019,
+      "p_value": 0.9995672482971486,
+      "drift_detected": false
+    },
+    "NCP": {
+      "ks_statistic": 0.0705423608649415,
+      "p_value": 0.9975282678991384,
+      "drift_detected": false
+    },
+    "CAEC": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "SMOKE": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "CH2O": {
+      "ks_statistic": 0.16456930166607586,
+      "p_value": 0.40128439293125556,
+      "drift_detected": false
+    },
+    "SCC": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "FAF": {
+      "ks_statistic": 0.08986175115207373,
+      "p_value": 0.9646506221629748,
+      "drift_detected": false
+    },
+    "TUE": {
+      "ks_statistic": 0.11635944700460829,
+      "p_value": 0.8085960636997406,
+      "drift_detected": false
+    },
+    "CALC": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "MTRANS": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "BMI": {
+      "ks_statistic": 1.0,
+      "p_value": 7.416634742158363e-61,
+      "drift_detected": true
+    }
+  },
+  "drifted_features": [
+    "BMI"
+  ],
+  "n_drifted": 1,
+  "n_total": 17,
+  "drift_ratio": 0.058823529411764705,
+  "overall_drift": false
+}
