@@ -16,6 +16,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.metrics import accuracy_score, classification_report
+from sklearn.utils.class_weight import compute_class_weight
 import joblib
 from dvclive import Live
 
@@ -65,6 +66,11 @@ print(f"Train shape: {data.shape}  |  Test shape: {dtest.shape}")
 if "y" not in data.columns:
     print("ERROR: 'y' column not found in train.csv")
     sys.exit(1)
+
+# ── BMI feature (Weight / Height²) ───────────────────────────────────────────
+if "Weight" in data.columns and "Height" in data.columns:
+    data["BMI"] = data["Weight"] / (data["Height"] ** 2)
+    print("Added feature: BMI = Weight / Height²")
 
 # ── Categorical columns: frequency-encode ────────────────────────────────────
 CAT_COLS = [c for c in data.columns if data[c].dtype == "O" and c != "y"]
@@ -177,6 +183,15 @@ callbacks = [
                       patience=LR_PATIENCE, min_lr=LR_MIN, verbose=1)
 ]
 
+# ── Class weights (handle imbalance) ─────────────────────────────────────────
+class_weights_arr = compute_class_weight(
+    class_weight="balanced",
+    classes=np.unique(y_train),
+    y=y_train
+)
+class_weight_dict = dict(enumerate(class_weights_arr))
+print(f"\nClass weights: { {le.classes_[i]: round(w, 2) for i, w in class_weight_dict.items()} }")
+
 # ── Train with DVCLive tracking ───────────────────────────────────────────────
 print("\nTraining model...")
 with Live(dir="dvclive", report="html") as live:
@@ -193,6 +208,7 @@ with Live(dir="dvclive", report="html") as live:
         epochs=EPOCHS,
         validation_data=(X_test_scaled, y_test),
         callbacks=callbacks,
+        class_weight=class_weight_dict,
         verbose=1
     )
 
