@@ -1,0 +1,149 @@
+name: Auto Retrain on New Data
+
+on:
+  push:
+    paths:
+      - 'data/new_data.csv'       # triggers when new labeled data is pushed
+      - 'train/*.csv'
+      - '.github/workflows/retrain-on-push.yml'
+  schedule:
+    - cron: '0 */12 * * *'        # also runs every 12 hours
+  workflow_dispatch:               # manual trigger from GitHub UI
+
+jobs:
+  monitor-and-retrain:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Checkout ────────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          fetch-depth: 0
+
+      # ── Python ──────────────────────────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── Git config for DVC commits ───────────────────────────────────────────
+      - name: Configure git
+        run: |
+          git config --global user.name  "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      # ── DVC remote (DagHub) ──────────────────────────────────────────────────
+      - name: Configure DVC remote
+        run: |
+          dvc remote modify origin --local auth basic
+          dvc remote modify origin --local user     ${{ secrets.DAGSHUB_USERNAME }}
+          dvc remote modify origin --local password ${{ secrets.DAGSHUB_TOKEN }}
+
+      - name: Pull existing data and model from DVC
+        run: dvc pull --allow-missing || echo "No existing DVC data to pull"
+
+      # ── Check for new labeled data ───────────────────────────────────────────
+      - name: Check for new data
+        id: check_data
+        run: |
+          if [ -f "data/new_data.csv" ]; then
+            HAS_Y=$(python -c "import pandas as pd; df=pd.read_csv('data/new_data.csv'); print('true' if 'y' in df.columns else 'false')")
+            echo "new_data_exists=true" >> $GITHUB_OUTPUT
+            echo "has_labels=$HAS_Y"   >> $GITHUB_OUTPUT
+            echo "Found new_data.csv — has y column: $HAS_Y"
+          else
+            echo "new_data_exists=false" >> $GITHUB_OUTPUT
+            echo "has_labels=false"      >> $GITHUB_OUTPUT
+            echo "No new_data.csv found"
+          fi
+
+      # ── Run monitoring (always) ──────────────────────────────────────────────
+      - name: Run monitoring
+        run: |
+          echo "Running monitoring check..."
+          python src/monitor.py || echo "Monitoring completed"
+          echo "Retrain needed: $(cat retrain_needed.txt 2>/dev/null || echo false)"
+
+      # ── Preprocess + merge new data ──────────────────────────────────────────
+      - name: Preprocess new data
+        if: steps.check_data.outputs.new_data_exists == 'true' && steps.check_data.outputs.has_labels == 'true'
+        run: |
+          echo "Merging new labeled data into training set..."
+          python src/preprocess_new_data.py
+
+      # ── Retrain via DVC ──────────────────────────────────────────────────────
+      # dvc repro only re-runs stages whose inputs changed (smart caching).
+      - name: Run DVC pipeline (train + evaluate)
+        if: steps.check_data.outputs.new_data_exists == 'true' && steps.check_data.outputs.has_labels == 'true'
+        run: |
+          echo "Running DVC pipeline..."
+          dvc repro
+
+      # ── Push updated model/artifacts to DagHub ────────────────────────────────
+      - name: Push artifacts to DVC remote
+        if: steps.check_data.outputs.new_data_exists == 'true' && steps.check_data.outputs.has_labels == 'true'
+        run: dvc push
+
+      # ── Show metrics ─────────────────────────────────────────────────────────
+      - name: Show metrics
+        if: steps.check_data.outputs.new_data_exists == 'true' && steps.check_data.outputs.has_labels == 'true'
+        run: |
+          dvc metrics show  || echo "No metrics available yet"
+          dvc metrics diff HEAD~1 || echo "No previous run to compare against"
+
+      # ── Commit dvc.lock, metrics, processed data ──────────────────────────────
+      - name: Commit changes
+        if: steps.check_data.outputs.new_data_exists == 'true' && steps.check_data.outputs.has_labels == 'true'
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}
+          git add dvc.lock metrics.json train/ data/processed/ reports/ || true
+          git add artifacts/metadata/ artifacts/metrics/ || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-retrain: Model updated with new data ($(date +'%Y-%m-%d %H:%M:%S'))"
+            git push
+          fi
+
+      # ── Upload reports as GitHub Actions artifacts ────────────────────────────
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-${{ github.run_id }}
+          path: |
+            reports/
+            metrics.json
+            metrics.txt
+            model_results.png
+            predictions_vs_actual.png
+            residuals_analysis.png
+            model_summary.txt
+            dvclive/report.html
+          retention-days: 30
+
+      # ── Notification ─────────────────────────────────────────────────────────
+      - name: Summary
+        if: always()
+        run: |
+          echo "=========================================="
+          if [ "${{ steps.check_data.outputs.has_labels }}" == "true" ]; then
+            echo "AUTO-RETRAINING COMPLETED"
+          else
+            echo "MONITORING COMPLETE (no labeled new data)"
+          fi
+          echo "=========================================="
+          cat retrain_needed.txt 2>/dev/null && echo " retrain_needed.txt" || true
+          cat metrics.txt        2>/dev/null || true

@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+venv/
+
+# DVC - actual data files (tracked by DVC, not git)
+/train/train.csv
+/test/test.csv
+/models/
+/artifacts/
+
+# Logs
+logs/*.log
+
+# Large outputs
+*.h5
+*.keras
+*.npy
+*.pkl
+
+# OS
+.DS_Store
+Thumbs.db

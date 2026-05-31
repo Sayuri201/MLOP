@@ -1,0 +1,56 @@
+stages:
+  train:
+    cmd: python src/model.py
+    deps:
+      - src/model.py
+      - params.yaml
+      - train/train.csv
+      - test/test.csv
+    params:
+      - data
+      - model
+      - callbacks
+    outs:
+      - models/model.keras
+      - artifacts/X_test_cnn.npy
+      - artifacts/y_test.npy
+      - artifacts/training_history.json
+      - artifacts/feature_columns.json
+      - artifacts/preprocessing/scaler.pkl
+      - artifacts/preprocessing/feature_columns.json
+      - artifacts/metadata/model_info.json
+    metrics:
+      - artifacts/metrics/test_metrics.json:
+          cache: false
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - params.yaml
+      - models/model.keras
+      - artifacts/X_test_cnn.npy
+      - artifacts/y_test.npy
+      - artifacts/training_history.json
+      - artifacts/feature_columns.json
+      - test/test.csv
+    params:
+      - evaluate
+    outs:
+      - predictions_vs_actual.png:
+          cache: false
+      - residuals_analysis.png:
+          cache: false
+    metrics:
+      - metrics.json:
+          cache: false
+
+params:
+  - dvclive/params.yaml
+
+metrics:
+  - dvclive/metrics.json
+
+plots:
+  - dvclive/plots/metrics:
+      x: step

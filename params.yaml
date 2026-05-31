@@ -1,0 +1,32 @@
+data:
+  test_size: 0.2
+  random_seed: 42
+
+model:
+  epochs: 10
+  batch_size: 32
+  learning_rate: 0.0001
+  cnn_filters:
+    - 64
+    - 128
+    - 64
+  kernel_size: 3
+  pool_size: 2
+  dense_units_1: 256
+  dense_units_2: 128
+  dense_units_3: 64
+  dropout_1: 0.3
+  dropout_2: 0.2
+
+callbacks:
+  early_stopping_patience: 10
+  reduce_lr_patience: 5
+  reduce_lr_factor: 0.5
+  reduce_lr_min_lr: 0.000001
+
+evaluate:
+  metrics_path: metrics.json
+
+monitor:
+  performance_threshold: 0.15   # retrain if R2 drops more than 15%
+  drift_threshold: 0.05          # KS test p-value threshold for drift
