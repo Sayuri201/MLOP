@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-05-31T12:21:12.124747",
+  "model_type": "1D CNN Classifier",
+  "task": "obesity level classification",
+  "test_size": 0.2,
+  "final_epoch": 49,
+  "metrics": {
+    "accuracy": 0.9649122807017544,
+    "f1_macro": 0.9637837518960877,
+    "f1_weighted": 0.9637948154981228,
+    "f1_per_class": {
+      "Insufficient_Weight": 0.96,
+      "Normal_Weight": 0.8735632183908046,
+      "Obesity_Type_I": 0.9896907216494846,
+      "Obesity_Type_II": 0.98989898989899,
+      "Obesity_Type_III": 1.0,
+      "Overweight_Level_I": 0.9333333333333333,
+      "Overweight_Level_II": 1.0
+    }
+  },
+  "training_history": {
+    "final_train_loss": 0.0728367269039154,
+    "final_val_loss": 0.11277596652507782,
+    "final_train_accuracy": 0.9692533016204834,
+    "final_val_accuracy": 0.9619883298873901
+  }
+}

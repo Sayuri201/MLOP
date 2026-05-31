@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head><title>Monitoring Report — 2026-05-31T12:20:50.509913</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 30px; }
+  h1   { color: #333; }
+  .ok  { color: green; font-weight: bold; }
+  .bad { color: red;   font-weight: bold; }
+  table { border-collapse: collapse; width: 65%; }
+  th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+  th { background: #f0f0f0; }
+</style></head>
+<body>
+<h1>Obesity Classifier — MLOps Monitoring Report</h1>
+<p><b>Generated:</b> 2026-05-31T12:20:50.509913</p>
+<hr>
+<h2>Summary</h2>
+<p>Retrain needed:
+  <span class="bad">
+    YES
+  </span>
+</p>
+
+<h2>Data Drift (KS Test)</h2>
+<p>Features checked: 17</p>
+<p>Features drifted: <span class="bad">9</span></p>
+<p>Drift ratio: 52.9%</p>
+<p>Overall drift: <span class="bad">True</span></p>
+<h3>Drifted Features</h3><ul><li>BMI — KS=1.0000, p=0.0000</li><li>Gender_freq — KS=1.0000, p=0.0000</li><li>family_history_with_overweight_freq — KS=1.0000, p=0.0000</li><li>FAVC_freq — KS=1.0000, p=0.0000</li><li>CAEC_freq — KS=1.0000, p=0.0000</li><li>SMOKE_freq — KS=1.0000, p=0.0000</li><li>SCC_freq — KS=1.0000, p=0.0000</li><li>CALC_freq — KS=1.0000, p=0.0000</li><li>MTRANS_freq — KS=1.0000, p=0.0000</li></ul>
+<h2>Performance on New Data</h2>
+<table>
+<tr><th>Metric</th><th>Reference (test split)</th><th>New Data</th></tr>
+<tr>
+  <td>Accuracy</td>
+  <td>0.9613</td>
+  <td class="bad">0.1429</td>
+</tr>
+<tr>
+  <td>F1 Macro</td>
+  <td>0.9605</td>
+  <td>0.0357</td>
+</tr>
+</table>
+<p>Accuracy drop: +0.8185  (threshold: 0.05)</p>
+</body></html>

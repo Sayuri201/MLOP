@@ -1,0 +1,106 @@
+{
+  "timestamp": "2026-05-31T12:20:50.509913",
+  "threshold": 0.05,
+  "features": {
+    "Age": {
+      "ks_statistic": 0.1324404761904762,
+      "p_value": 0.6754775177655455,
+      "drift_detected": false
+    },
+    "Height": {
+      "ks_statistic": 0.12946428571428573,
+      "p_value": 0.7018148974584326,
+      "drift_detected": false
+    },
+    "Weight": {
+      "ks_statistic": 0.09672619047619048,
+      "p_value": 0.9389450412280287,
+      "drift_detected": false
+    },
+    "FCVC": {
+      "ks_statistic": 0.07068452380952381,
+      "p_value": 0.997654679595753,
+      "drift_detected": false
+    },
+    "NCP": {
+      "ks_statistic": 0.09077380952380952,
+      "p_value": 0.9630533610602728,
+      "drift_detected": false
+    },
+    "CH2O": {
+      "ks_statistic": 0.19642857142857142,
+      "p_value": 0.21194117066336088,
+      "drift_detected": false
+    },
+    "FAF": {
+      "ks_statistic": 0.11235119047619048,
+      "p_value": 0.843338446971788,
+      "drift_detected": false
+    },
+    "TUE": {
+      "ks_statistic": 0.15401785714285715,
+      "p_value": 0.4881869603948352,
+      "drift_detected": false
+    },
+    "BMI": {
+      "ks_statistic": 1.0,
+      "p_value": 1.147402509958784e-58,
+      "drift_detected": true
+    },
+    "Gender_freq": {
+      "ks_statistic": 1.0,
+      "p_value": 1.147402509958784e-58,
+      "drift_detected": true
+    },
+    "family_history_with_overweight_freq": {
+      "ks_statistic": 1.0,
+      "p_value": 1.147402509958784e-58,
+      "drift_detected": true
+    },
+    "FAVC_freq": {
+      "ks_statistic": 1.0,
+      "p_value": 1.147402509958784e-58,
+      "drift_detected": true
+    },
+    "CAEC_freq": {
+      "ks_statistic": 1.0,
+      "p_value": 1.147402509958784e-58,
+      "drift_detected": true
+    },
+    "SMOKE_freq": {
+      "ks_statistic": 1.0,
+      "p_value": 1.147402509958784e-58,
+      "drift_detected": true
+    },
+    "SCC_freq": {
+      "ks_statistic": 1.0,
+      "p_value": 1.147402509958784e-58,
+      "drift_detected": true
+    },
+    "CALC_freq": {
+      "ks_statistic": 1.0,
+      "p_value": 1.147402509958784e-58,
+      "drift_detected": true
+    },
+    "MTRANS_freq": {
+      "ks_statistic": 1.0,
+      "p_value": 1.147402509958784e-58,
+      "drift_detected": true
+    }
+  },
+  "drifted_features": [
+    "BMI",
+    "Gender_freq",
+    "family_history_with_overweight_freq",
+    "FAVC_freq",
+    "CAEC_freq",
+    "SMOKE_freq",
+    "SCC_freq",
+    "CALC_freq",
+    "MTRANS_freq"
+  ],
+  "n_drifted": 9,
+  "n_total": 17,
+  "drift_ratio": 0.5294117647058824,
+  "overall_drift": true
+}
