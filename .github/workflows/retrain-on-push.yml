@@ -107,12 +107,12 @@ jobs:
         if: steps.check_data.outputs.new_data_exists == 'true' && steps.check_data.outputs.has_labels == 'true'
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}
-          git add dvc.lock metrics.json train/ data/processed/ reports/ || true
-          git add artifacts/metadata/ artifacts/metrics/ || true
+          git add dvc.lock metrics.json metrics.txt reports/ || true
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Auto-retrain: Model updated with new data ($(date +'%Y-%m-%d %H:%M:%S'))"
+            git commit -m "Auto-retrain: Model updated with new data ($(date +'%Y-%m-%d %H:%M:%S')) [skip ci]"
+            git pull --rebase origin main || true
             git push
           fi
 
