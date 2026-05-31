@@ -21,6 +21,9 @@ logs/*.log
 *.npy
 *.pkl
 
+# Raw dataset (too large for git — tracked by DVC or kept local)
+cleaned_obesity.csv
+
 # OS
 .DS_Store
 Thumbs.db

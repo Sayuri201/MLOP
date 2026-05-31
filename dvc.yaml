@@ -17,7 +17,14 @@ stages:
       - artifacts/training_history.json
       - artifacts/feature_columns.json
       - artifacts/preprocessing/scaler.pkl
+      - artifacts/preprocessing/encoder.pkl
       - artifacts/preprocessing/feature_columns.json
+      - artifacts/preprocessing/freq_maps.json
+      - artifacts/preprocessing/class_names.json
+      - artifacts/data/X_train_cnn.npy
+      - artifacts/data/X_test_cnn.npy
+      - artifacts/data/y_train.npy
+      - artifacts/data/y_test.npy
       - artifacts/metadata/model_info.json
     metrics:
       - artifacts/metrics/test_metrics.json:
@@ -33,13 +40,18 @@ stages:
       - artifacts/y_test.npy
       - artifacts/training_history.json
       - artifacts/feature_columns.json
+      - artifacts/preprocessing/encoder.pkl
+      - artifacts/preprocessing/scaler.pkl
+      - artifacts/preprocessing/freq_maps.json
       - test/test.csv
     params:
       - evaluate
     outs:
-      - predictions_vs_actual.png:
+      - confusion_matrix.png:
           cache: false
-      - residuals_analysis.png:
+      - training_history.png:
+          cache: false
+      - per_class_f1.png:
           cache: false
     metrics:
       - metrics.json:

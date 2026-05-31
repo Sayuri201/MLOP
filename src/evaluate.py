@@ -7,9 +7,14 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 import yaml
+import joblib
 import tensorflow as tf
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.metrics import (
+    accuracy_score, f1_score, classification_report,
+    confusion_matrix, ConfusionMatrixDisplay
+)
 
 # ── Load params ───────────────────────────────────────────────────────────────
 with open("params.yaml") as f:
@@ -26,6 +31,7 @@ required = [
     "artifacts/y_test.npy",
     "artifacts/training_history.json",
     "artifacts/feature_columns.json",
+    "artifacts/preprocessing/encoder.pkl",
     "models/model.keras",
     "test/test.csv",
 ]
@@ -34,145 +40,174 @@ for path in required:
         print(f"ERROR: {path} not found — run model.py first")
         sys.exit(1)
 
-# ── Custom R² — must match model.py ──────────────────────────────────────────
-def r2_metric(y_true, y_pred):
-    SS_res = tf.reduce_sum(tf.square(y_true - y_pred))
-    SS_tot = tf.reduce_sum(tf.square(y_true - tf.reduce_mean(y_true)))
-    return 1 - SS_res / (SS_tot + tf.keras.backend.epsilon())
-
-# ── Load model and test data ──────────────────────────────────────────────────
+# ── Load model, encoder, and test data ───────────────────────────────────────
 print("Loading model and test data...")
-model      = tf.keras.models.load_model("models/model.keras",
-                                        custom_objects={"r2_metric": r2_metric})
+model      = tf.keras.models.load_model("models/model.keras")
 X_test_cnn = np.load("artifacts/X_test_cnn.npy")
 y_test     = np.load("artifacts/y_test.npy")
+le         = joblib.load("artifacts/preprocessing/encoder.pkl")
+class_names = list(le.classes_)
+
 print(f"X_test_cnn: {X_test_cnn.shape}  |  y_test: {y_test.shape}")
+print(f"Classes: {class_names}")
 
 with open("artifacts/training_history.json") as f:
     history_dict = json.load(f)
 
-# ── Evaluate ──────────────────────────────────────────────────────────────────
-score = model.evaluate(X_test_cnn, y_test, verbose=0)
-preds = model.predict(X_test_cnn, verbose=0).flatten()
+# ── Predictions ───────────────────────────────────────────────────────────────
+y_pred_proba = model.predict(X_test_cnn, verbose=0)
+y_pred       = np.argmax(y_pred_proba, axis=1)
 
-mse_val  = float(mean_squared_error(y_test, preds))
-rmse_val = float(np.sqrt(mse_val))
-mae_val  = float(mean_absolute_error(y_test, preds))
-r2_val   = float(r2_score(y_test, preds))
+# ── Classification metrics ────────────────────────────────────────────────────
+acc      = float(accuracy_score(y_test, y_pred))
+f1_macro = float(f1_score(y_test, y_pred, average="macro",  zero_division=0))
+f1_weighted = float(f1_score(y_test, y_pred, average="weighted", zero_division=0))
 
 print(f"\nTest Results:")
-print(f"  MSE:  {mse_val:.4f}")
-print(f"  RMSE: {rmse_val:.4f}")
-print(f"  MAE:  {mae_val:.4f}")
-print(f"  R²:   {r2_val:.4f}")
+print(f"  Accuracy  : {acc:.4f}")
+print(f"  F1 Macro  : {f1_macro:.4f}")
+print(f"  F1 Weighted: {f1_weighted:.4f}")
+print(f"\nClassification Report:")
+print(classification_report(y_test, y_pred, target_names=class_names, zero_division=0))
 
-# ── Plot: predictions vs actual ───────────────────────────────────────────────
 os.makedirs("artifacts", exist_ok=True)
-plt.figure(figsize=(8, 6))
-plt.scatter(y_test, preds, alpha=0.4, s=10)
-lim = [y_test.min(), y_test.max()]
-plt.plot(lim, lim, "r--", lw=2, label="Perfect prediction")
-plt.xlabel("True Values (y)")
-plt.ylabel("Predicted Values")
-plt.title("Predictions vs True Values")
-plt.legend(); plt.grid(True, alpha=0.3)
-plt.savefig("predictions_vs_actual.png", dpi=200, bbox_inches="tight")
-plt.savefig("artifacts/predictions_vs_actual.png", dpi=200, bbox_inches="tight")
-plt.close()
-print("Saved: predictions_vs_actual.png")
+os.makedirs("reports",   exist_ok=True)
 
-# ── Plot: residuals ───────────────────────────────────────────────────────────
-residuals = y_test - preds
+# ── Confusion matrix plot ─────────────────────────────────────────────────────
+cm = confusion_matrix(y_test, y_pred)
+fig, ax = plt.subplots(figsize=(10, 8))
+sns.heatmap(
+    cm, annot=True, fmt="d", cmap="Blues",
+    xticklabels=class_names, yticklabels=class_names, ax=ax
+)
+ax.set_xlabel("Predicted")
+ax.set_ylabel("True")
+ax.set_title(f"Confusion Matrix (Accuracy={acc:.3f})")
+plt.xticks(rotation=45, ha="right")
+plt.yticks(rotation=0)
+plt.tight_layout()
+plt.savefig("confusion_matrix.png", dpi=200, bbox_inches="tight")
+plt.savefig("artifacts/confusion_matrix.png", dpi=200, bbox_inches="tight")
+plt.close()
+print("Saved: confusion_matrix.png")
+
+# ── Training history plots ────────────────────────────────────────────────────
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-axes[0].hist(residuals, bins=50, edgecolor="black", alpha=0.7, color="steelblue")
-axes[0].axvline(x=0, color="r", linestyle="--", lw=2)
-axes[0].set_title("Residuals Distribution")
-axes[0].set_xlabel("Residual"); axes[0].set_ylabel("Count")
-axes[0].grid(True, alpha=0.3)
+axes[0].plot(history_dict["loss"],     label="Train Loss")
+axes[0].plot(history_dict["val_loss"], label="Val Loss")
+axes[0].set_title("Loss over Epochs")
+axes[0].set_xlabel("Epoch"); axes[0].set_ylabel("Loss")
+axes[0].legend(); axes[0].grid(True)
 
-axes[1].scatter(preds, residuals, alpha=0.3, s=8)
-axes[1].axhline(y=0, color="r", linestyle="--", lw=2)
-axes[1].set_title("Residuals vs Predicted")
-axes[1].set_xlabel("Predicted"); axes[1].set_ylabel("Residual")
-axes[1].grid(True, alpha=0.3)
+axes[1].plot(history_dict["accuracy"],     label="Train Accuracy")
+axes[1].plot(history_dict["val_accuracy"], label="Val Accuracy")
+axes[1].set_title("Accuracy over Epochs")
+axes[1].set_xlabel("Epoch"); axes[1].set_ylabel("Accuracy")
+axes[1].legend(); axes[1].grid(True)
 
 plt.tight_layout()
-plt.savefig("residuals_analysis.png", dpi=200, bbox_inches="tight")
-plt.savefig("artifacts/residuals_analysis.png", dpi=200, bbox_inches="tight")
+plt.savefig("training_history.png", dpi=200, bbox_inches="tight")
+plt.savefig("artifacts/training_history.png", dpi=200, bbox_inches="tight")
 plt.close()
-print("Saved: residuals_analysis.png")
+print("Saved: training_history.png")
+
+# ── Per-class F1 chart ────────────────────────────────────────────────────────
+f1_per_class = f1_score(y_test, y_pred, average=None, zero_division=0)
+fig, ax = plt.subplots(figsize=(10, 5))
+bars = ax.bar(class_names, f1_per_class, color="steelblue", edgecolor="black")
+ax.set_ylim(0, 1.05)
+ax.set_xlabel("Class")
+ax.set_ylabel("F1 Score")
+ax.set_title("Per-Class F1 Score")
+plt.xticks(rotation=45, ha="right")
+for bar, val in zip(bars, f1_per_class):
+    ax.text(bar.get_x() + bar.get_width() / 2, val + 0.01,
+            f"{val:.2f}", ha="center", va="bottom", fontsize=8)
+plt.tight_layout()
+plt.savefig("per_class_f1.png", dpi=200, bbox_inches="tight")
+plt.savefig("artifacts/per_class_f1.png", dpi=200, bbox_inches="tight")
+plt.close()
+print("Saved: per_class_f1.png")
 
 # ── metrics.json (read by DVC) ────────────────────────────────────────────────
 metrics_out = {
-    "timestamp":   datetime.now().isoformat(),
-    "model_type":  "1D CNN Regression",
-    "test_size":   TEST_SIZE,
-    "batch_size":  BATCH_SIZE,
-    "final_epoch": len(history_dict["loss"]),
+    "timestamp":    datetime.now().isoformat(),
+    "model_type":   "1D CNN Classifier",
+    "task":         "obesity level classification",
+    "test_size":    TEST_SIZE,
+    "final_epoch":  len(history_dict["loss"]),
     "metrics": {
-        "mse":  mse_val,
-        "rmse": rmse_val,
-        "mae":  mae_val,
-        "r2":   r2_val,
+        "accuracy":      acc,
+        "f1_macro":      f1_macro,
+        "f1_weighted":   f1_weighted,
+        "f1_per_class":  {cls: float(f1) for cls, f1 in zip(class_names, f1_per_class)},
     },
     "training_history": {
-        "final_train_loss": float(history_dict["loss"][-1]),
-        "final_val_loss":   float(history_dict["val_loss"][-1]),
+        "final_train_loss":     float(history_dict["loss"][-1]),
+        "final_val_loss":       float(history_dict["val_loss"][-1]),
+        "final_train_accuracy": float(history_dict["accuracy"][-1]),
+        "final_val_accuracy":   float(history_dict["val_accuracy"][-1]),
     }
 }
-if "r2_metric" in history_dict:
-    metrics_out["training_history"]["final_train_r2"] = float(history_dict["r2_metric"][-1])
-    metrics_out["training_history"]["final_val_r2"]   = float(history_dict["val_r2_metric"][-1])
 
 with open(METRICS_PATH, "w") as f:
     json.dump(metrics_out, f, indent=2)
 print(f"Saved: {METRICS_PATH}")
 
+# ── Save full evaluation metrics for monitoring ───────────────────────────────
+with open("artifacts/metrics/evaluation_metrics.json", "w") as f:
+    json.dump(metrics_out, f, indent=2)
+
 # ── metrics.txt (human readable) ─────────────────────────────────────────────
+report_str = classification_report(y_test, y_pred, target_names=class_names, zero_division=0)
 with open("metrics.txt", "w") as f:
-    f.write("=" * 50 + "\n")
-    f.write("MODEL PERFORMANCE METRICS\n")
-    f.write("=" * 50 + "\n")
-    f.write(f"MSE:  {mse_val:.4f}\n")
-    f.write(f"RMSE: {rmse_val:.4f}\n")
-    f.write(f"MAE:  {mae_val:.4f}\n")
-    f.write(f"R2:   {r2_val:.4f}\n")
-    f.write("=" * 50 + "\n\n")
-    f.write("TRAINING HISTORY\n")
-    f.write("=" * 50 + "\n")
-    f.write(f"Final Train Loss: {history_dict['loss'][-1]:.4f}\n")
-    f.write(f"Final Val Loss:   {history_dict['val_loss'][-1]:.4f}\n")
-    if "r2_metric" in history_dict:
-        f.write(f"Final Train R2:   {history_dict['r2_metric'][-1]:.4f}\n")
-        f.write(f"Final Val R2:     {history_dict['val_r2_metric'][-1]:.4f}\n")
+    f.write("=" * 55 + "\n")
+    f.write("OBESITY CLASSIFICATION — MODEL METRICS\n")
+    f.write("=" * 55 + "\n")
+    f.write(f"Accuracy    : {acc:.4f}\n")
+    f.write(f"F1 Macro    : {f1_macro:.4f}\n")
+    f.write(f"F1 Weighted : {f1_weighted:.4f}\n")
+    f.write("=" * 55 + "\n\n")
+    f.write("CLASSIFICATION REPORT\n")
+    f.write("=" * 55 + "\n")
+    f.write(report_str)
+    f.write("\nTRAINING HISTORY\n")
+    f.write("=" * 55 + "\n")
+    f.write(f"Final Train Loss    : {history_dict['loss'][-1]:.4f}\n")
+    f.write(f"Final Val Loss      : {history_dict['val_loss'][-1]:.4f}\n")
+    f.write(f"Final Train Accuracy: {history_dict['accuracy'][-1]:.4f}\n")
+    f.write(f"Final Val Accuracy  : {history_dict['val_accuracy'][-1]:.4f}\n")
 print("Saved: metrics.txt")
 
-# ── Submission CSV (Kaggle-style — test.csv has no y) ─────────────────────────
+# ── Submission CSV (predictions on test set) ──────────────────────────────────
 with open("artifacts/feature_columns.json") as f:
     feature_columns = json.load(f)
 
+freq_maps = {}
 if os.path.exists("artifacts/preprocessing/freq_maps.json"):
     with open("artifacts/preprocessing/freq_maps.json") as f:
         freq_maps = json.load(f)
-else:
-    freq_maps = {}
 
+scaler = None
 if os.path.exists("artifacts/preprocessing/scaler.pkl"):
-    import joblib
     scaler = joblib.load("artifacts/preprocessing/scaler.pkl")
-else:
-    scaler = None
 
 dtest     = pd.read_csv("test/test.csv")
 test_data = dtest.copy()
+
+# Save IDs if present
 if "ID" in test_data.columns:
     test_ids  = test_data["ID"]
     test_data = test_data.drop("ID", axis=1)
 else:
     test_ids = pd.Series(range(len(test_data)))
 
-# Apply frequency encoding to categorical columns
+# Drop target if present
+if "y" in test_data.columns:
+    test_data = test_data.drop("y", axis=1)
+
+# Apply frequency encoding
 cat_cols = [c for c in test_data.columns if test_data[c].dtype == "O"]
 for col in cat_cols:
     if col in freq_maps:
@@ -189,14 +224,13 @@ test_data = test_data[feature_columns]
 test_data = test_data.apply(pd.to_numeric, errors="coerce").fillna(0)
 
 # Scale and reshape
-if scaler is not None:
-    X_sub = scaler.transform(test_data.values)
-else:
-    X_sub = test_data.values
+X_sub = scaler.transform(test_data.values) if scaler else test_data.values
 X_sub = X_sub.reshape(X_sub.shape[0], X_sub.shape[1], 1)
 
-preds_sub = model.predict(X_sub, verbose=0).flatten()
-submission = pd.DataFrame({"ID": test_ids, "y": preds_sub})
+preds_sub    = model.predict(X_sub, verbose=0)
+preds_labels = le.inverse_transform(np.argmax(preds_sub, axis=1))
+
+submission = pd.DataFrame({"ID": test_ids, "predicted_class": preds_labels})
 submission.to_csv("submission.csv", index=False)
 submission.to_csv("artifacts/submission.csv", index=False)
 print(f"Saved: submission.csv ({len(submission)} predictions)")

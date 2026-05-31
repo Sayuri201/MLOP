@@ -3,9 +3,10 @@ data:
   random_seed: 42
 
 model:
-  epochs: 10
+  num_classes: 7          # Insufficient_Weight, Normal_Weight, Overweight_I/II, Obesity_I/II/III
+  epochs: 50
   batch_size: 32
-  learning_rate: 0.0001
+  learning_rate: 0.001
   cnn_filters:
     - 64
     - 128
@@ -28,5 +29,5 @@ evaluate:
   metrics_path: metrics.json
 
 monitor:
-  performance_threshold: 0.15   # retrain if R2 drops more than 15%
-  drift_threshold: 0.05          # KS test p-value threshold for drift
+  performance_threshold: 0.05   # retrain if accuracy drops more than 5%
+  drift_threshold: 0.05          # KS test p-value threshold for feature drift

@@ -7,5 +7,6 @@ scikit-learn
 joblib
 scipy
 dvc
+dvc-gdrive
 dvclive
 PyYAML
