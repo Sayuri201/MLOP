@@ -117,6 +117,10 @@ def load_new_data(arts):
     if "ID" in df.columns:
         df = df.drop("ID", axis=1)
 
+    # Add BMI feature (must match model.py preprocessing)
+    if "Weight" in df.columns and "Height" in df.columns:
+        df["BMI"] = df["Weight"] / (df["Height"] ** 2)
+
     # Encode target
     le = arts["le"]
     y_new = le.transform(y_raw)

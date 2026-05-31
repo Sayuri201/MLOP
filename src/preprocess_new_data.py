@@ -33,6 +33,11 @@ if "y" not in df_new.columns:
 
 print(f"New data class distribution:\n{df_new['y'].value_counts()}")
 
+# Add BMI feature if not already present
+if "BMI" not in df_new.columns and "Weight" in df_new.columns and "Height" in df_new.columns:
+    df_new["BMI"] = df_new["Weight"] / (df_new["Height"] ** 2)
+    print("Added BMI feature to new data")
+
 # ── Load existing training data ───────────────────────────────────────────────
 if not os.path.exists("train/train.csv"):
     print("ERROR: train/train.csv not found.")
