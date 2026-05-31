@@ -5,12 +5,12 @@ stages:
     deps:
     - path: params.yaml
       hash: md5
-      md5: 977c88422c2f3f9869c4e3732ec9ee0a
-      size: 692
+      md5: 035a4b1ded5b56b93d2f3255359e5d04
+      size: 638
     - path: src/model.py
       hash: md5
-      md5: 57a2d4c52dfff2556ffd5d32a4bb3751
-      size: 14434
+      md5: 1b8fe3630cf0de9ca04722dd4ab0b5fc
+      size: 13347
     - path: test/test.csv
       hash: md5
       md5: 9bf14db31ff16cce35697b36c8099911
@@ -22,7 +22,7 @@ stages:
     params:
       params.yaml:
         callbacks:
-          early_stopping_patience: 10
+          early_stopping_patience: 15
           reduce_lr_patience: 5
           reduce_lr_factor: 0.5
           reduce_lr_min_lr: 1e-06
@@ -31,28 +31,23 @@ stages:
           random_seed: 42
         model:
           num_classes: 7
-          epochs: 50
+          epochs: 100
           batch_size: 32
           learning_rate: 0.001
-          cnn_filters:
-          - 64
-          - 128
-          - 64
-          kernel_size: 3
-          pool_size: 2
           dense_units_1: 256
           dense_units_2: 128
           dense_units_3: 64
+          dense_units_4: 32
           dropout_1: 0.3
           dropout_2: 0.2
     outs:
     - path: artifacts/data/X_test.npy
       hash: md5
-      md5: a6c96cccfded1f875a1c294e5834de85
+      md5: f8df028943ae741d03bd3b65aeef95ee
       size: 10112
     - path: artifacts/data/X_train.npy
       hash: md5
-      md5: 2a779519b24cd7d7e060d66ccc8cf5a1
+      md5: 3079fb1b9ef366a0ae754b35485f0253
       size: 40064
     - path: artifacts/data/y_test.npy
       hash: md5
@@ -68,11 +63,11 @@ stages:
       size: 249
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 2ec2f9a5820bfe2e3069d9def57bf714
-      size: 908
+      md5: 451a4fdad1f983604f2b4eca1bdd10c3
+      size: 918
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: 232dd2301ba7f5c06e6e2f7be1437774
+      md5: 156bb1435657d3b7c9ad4a34aca12488
       size: 84
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -96,18 +91,18 @@ stages:
       size: 967
     - path: artifacts/training_history.json
       hash: md5
-      md5: 189e7f8c9664e9b00d1a67b32018e8fa
-      size: 3787
+      md5: 8185c3e0622c8438cd39859563a076e9
+      size: 4288
     - path: models/model.keras
       hash: md5
-      md5: a2bc99947eaf08f4bed6306a69c8eda3
-      size: 1550153
+      md5: 7db1360ac512998e651d2b389787e2fa
+      size: 640026
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: artifacts/data/X_test.npy
       hash: md5
-      md5: a6c96cccfded1f875a1c294e5834de85
+      md5: f8df028943ae741d03bd3b65aeef95ee
       size: 10112
     - path: artifacts/data/y_test.npy
       hash: md5
@@ -131,20 +126,20 @@ stages:
       size: 967
     - path: artifacts/training_history.json
       hash: md5
-      md5: 189e7f8c9664e9b00d1a67b32018e8fa
-      size: 3787
+      md5: 8185c3e0622c8438cd39859563a076e9
+      size: 4288
     - path: models/model.keras
       hash: md5
-      md5: a2bc99947eaf08f4bed6306a69c8eda3
-      size: 1550153
+      md5: 7db1360ac512998e651d2b389787e2fa
+      size: 640026
     - path: params.yaml
       hash: md5
-      md5: 977c88422c2f3f9869c4e3732ec9ee0a
-      size: 692
+      md5: 035a4b1ded5b56b93d2f3255359e5d04
+      size: 638
     - path: src/evaluate.py
       hash: md5
-      md5: e9467b37d2419f1c10ad86e6ac3b5602
-      size: 10361
+      md5: e5d5a3d2986e0e4a5ebfebce7e57d386
+      size: 10268
     - path: test/test.csv
       hash: md5
       md5: 9bf14db31ff16cce35697b36c8099911
@@ -156,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 366f45ac7e866bebbb186efdefdc604d
-      size: 132483
+      md5: 1867f96f9377076d264b4acf361364ac
+      size: 133220
     - path: metrics.json
       hash: md5
-      md5: 6fc4557b2796cb6c17bcc16e2920d755
-      size: 856
+      md5: 9904c5bbf873e94e97a74609c91c07cc
+      size: 822
     - path: per_class_f1.png
       hash: md5
-      md5: d5cf409e28eeea6ac36b4f68ccc77067
-      size: 91521
+      md5: 4ff4b430b7236af36c9af276c7db4277
+      size: 89731
     - path: training_history.png
       hash: md5
-      md5: 2f8f429b97b169f2395983ec5de183a7
-      size: 151543
+      md5: 7651ceae1dae57d534530fd950557780
+      size: 134074

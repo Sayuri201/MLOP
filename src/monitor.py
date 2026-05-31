@@ -143,14 +143,13 @@ def load_new_data(arts):
     if os.path.exists("artifacts/preprocessing/scaler.pkl"):
         scaler = joblib.load("artifacts/preprocessing/scaler.pkl")
     X_new = scaler.transform(df.values) if scaler else df.values
-    X_new_cnn = X_new.reshape(X_new.shape[0], X_new.shape[1], 1)
-    return X_new_cnn, y_new
+    return X_new, y_new
 
 
 def detect_drift(X_ref, X_new, feature_names, threshold):
     """KS test on each feature between reference (training) and new data."""
-    ref_flat = X_ref[:, :, 0]
-    new_flat = X_new[:, :, 0]
+    ref_flat = X_ref
+    new_flat = X_new
     n_features = ref_flat.shape[1]
     drifted = []
     results = {}
@@ -181,7 +180,7 @@ def detect_drift(X_ref, X_new, feature_names, threshold):
 def check_performance(model, X_ref, y_ref, X_new, y_new, threshold):
     """Compare accuracy on reference vs new data. Flag if drop > threshold."""
     y_ref_pred = np.argmax(model.predict(X_ref, verbose=0), axis=1)
-    y_new_pred = np.argmax(model.predict(X_new, verbose=0), axis=1)
+    y_new_pred = np.argmax(model.predict(X_new,  verbose=0), axis=1)
 
     ref_acc = float(accuracy_score(y_ref, y_ref_pred))
     new_acc = float(accuracy_score(y_new, y_new_pred))

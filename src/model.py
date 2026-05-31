@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import yaml
 import tensorflow as tf
 from tensorflow.keras import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv1D, MaxPooling1D
+from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
@@ -28,12 +28,10 @@ BATCH_SIZE    = params["model"]["batch_size"]
 LEARNING_RATE = params["model"]["learning_rate"]
 SEED          = params["data"]["random_seed"]
 TEST_SIZE     = params["data"]["test_size"]
-CNN_FILTERS   = params["model"]["cnn_filters"]
-KERNEL_SIZE   = params["model"]["kernel_size"]
-POOL_SIZE     = params["model"]["pool_size"]
 DENSE_1       = params["model"]["dense_units_1"]
 DENSE_2       = params["model"]["dense_units_2"]
 DENSE_3       = params["model"]["dense_units_3"]
+DENSE_4       = params["model"]["dense_units_4"]
 DROPOUT_1     = params["model"]["dropout_1"]
 DROPOUT_2     = params["model"]["dropout_2"]
 NUM_CLASSES   = params["model"]["num_classes"]
@@ -49,14 +47,14 @@ for d in ["artifacts", "artifacts/preprocessing", "artifacts/data",
     os.makedirs(d, exist_ok=True)
 
 print("=" * 60)
-print("OBESITY CLASSIFICATION — CNN TRAINING")
+print("OBESITY CLASSIFICATION — MLP TRAINING")
 print("=" * 60)
 
 # ── Load data ─────────────────────────────────────────────────────────────────
 for path in ["train/train.csv", "test/test.csv"]:
     if not os.path.exists(path):
         print(f"ERROR: {path} not found!")
-        print("Run:  python data_setup.py  to prepare the data first.")
+        print("Run:  python data_setup.py  first.")
         sys.exit(1)
 
 print("\nLoading data...")
@@ -64,13 +62,11 @@ data  = pd.read_csv("train/train.csv")
 dtest = pd.read_csv("test/test.csv")
 print(f"Train shape: {data.shape}  |  Test shape: {dtest.shape}")
 
-# ── Validate target column ────────────────────────────────────────────────────
 if "y" not in data.columns:
     print("ERROR: 'y' column not found in train.csv")
-    print("Run data_setup.py to generate correctly formatted CSV files.")
     sys.exit(1)
 
-# ── Categorical columns (frequency-encode) ────────────────────────────────────
+# ── Categorical columns: frequency-encode ────────────────────────────────────
 CAT_COLS = [c for c in data.columns if data[c].dtype == "O" and c != "y"]
 print(f"\nCategorical columns ({len(CAT_COLS)}): {CAT_COLS}")
 
@@ -86,10 +82,10 @@ with open("artifacts/preprocessing/freq_maps.json", "w") as f:
     json.dump(freq_maps, f, indent=2)
 print("Saved: artifacts/preprocessing/freq_maps.json")
 
-# ── Constant columns ──────────────────────────────────────────────────────────
+# ── Drop constant columns ─────────────────────────────────────────────────────
 constant_cols = [c for c in data.columns if c != "y" and data[c].nunique() <= 1]
 if constant_cols:
-    print(f"Dropping {len(constant_cols)} constant columns: {constant_cols}")
+    print(f"Dropping {len(constant_cols)} constant columns")
     data = data.drop(constant_cols, axis=1)
 
 with open("artifacts/preprocessing/constant_cols.json", "w") as f:
@@ -100,17 +96,13 @@ X = data.drop("y", axis=1).apply(pd.to_numeric, errors="coerce")
 X = X.fillna(X.mean()).fillna(0).values
 y_raw = data["y"].values
 
-# Encode class labels to integers (0 … 6)
 le = LabelEncoder()
-y = le.fit_transform(y_raw)
-
+y  = le.fit_transform(y_raw)
 NUM_CLASSES = len(le.classes_)
-params["model"]["num_classes"] = NUM_CLASSES   # update in-memory for model build
 
 print(f"\nClasses ({NUM_CLASSES}): {list(le.classes_)}")
 print(f"X shape: {X.shape}  |  y shape: {y.shape}")
 
-# Save encoder and feature columns
 joblib.dump(le, "artifacts/preprocessing/encoder.pkl")
 print("Saved: artifacts/preprocessing/encoder.pkl")
 
@@ -119,11 +111,9 @@ with open("artifacts/feature_columns.json", "w") as f:
     json.dump(feature_columns, f, indent=2)
 with open("artifacts/preprocessing/feature_columns.json", "w") as f:
     json.dump(feature_columns, f, indent=2)
-print(f"Saved feature_columns.json ({len(feature_columns)} features)")
-
-# Save class names for evaluate / monitor
 with open("artifacts/preprocessing/class_names.json", "w") as f:
     json.dump(list(le.classes_), f, indent=2)
+print(f"Saved feature_columns.json ({len(feature_columns)} features)")
 
 # ── Train / test split ────────────────────────────────────────────────────────
 X_train, X_test, y_train, y_test = train_test_split(
@@ -138,37 +128,31 @@ X_test_scaled  = scaler.transform(X_test)
 joblib.dump(scaler, "artifacts/preprocessing/scaler.pkl")
 print("Saved: artifacts/preprocessing/scaler.pkl")
 
-# ── Reshape for 1D CNN: (samples, features, 1) ───────────────────────────────
-X_train_cnn = X_train_scaled.reshape(X_train_scaled.shape[0], X_train_scaled.shape[1], 1)
-X_test_cnn  = X_test_scaled.reshape(X_test_scaled.shape[0],  X_test_scaled.shape[1],  1)
-
-np.save("artifacts/data/X_train.npy", X_train_cnn)
-np.save("artifacts/data/X_test.npy",  X_test_cnn)
+# ── Save arrays (2D — no reshape needed for MLP) ──────────────────────────────
+np.save("artifacts/data/X_train.npy", X_train_scaled)
+np.save("artifacts/data/X_test.npy",  X_test_scaled)
 np.save("artifacts/data/y_train.npy", y_train)
 np.save("artifacts/data/y_test.npy",  y_test)
 print("Saved arrays to artifacts/data/")
 
-# ── Build 1D CNN classifier ───────────────────────────────────────────────────
+# ── Build MLP model ───────────────────────────────────────────────────────────
 tf.random.set_seed(SEED)
-n_features = X_train_cnn.shape[1]
+n_features = X_train_scaled.shape[1]
 
 model = Sequential([
-    Conv1D(CNN_FILTERS[0], kernel_size=KERNEL_SIZE, activation="relu",
-           input_shape=(n_features, 1), padding="same"),
-    MaxPooling1D(pool_size=POOL_SIZE),
-
-    Conv1D(CNN_FILTERS[1], kernel_size=KERNEL_SIZE, activation="relu", padding="same"),
-    MaxPooling1D(pool_size=POOL_SIZE),
-
-    Conv1D(CNN_FILTERS[2], kernel_size=KERNEL_SIZE, activation="relu", padding="same"),
-    MaxPooling1D(pool_size=POOL_SIZE),
-
-    Flatten(),
-    Dense(DENSE_1, activation="relu"),
+    Dense(DENSE_1, activation="relu", input_shape=(n_features,)),
+    BatchNormalization(),
     Dropout(DROPOUT_1),
+
     Dense(DENSE_2, activation="relu"),
+    BatchNormalization(),
     Dropout(DROPOUT_2),
+
     Dense(DENSE_3, activation="relu"),
+    Dropout(DROPOUT_2),
+
+    Dense(DENSE_4, activation="relu"),
+
     Dense(NUM_CLASSES, activation="softmax")
 ])
 
@@ -201,12 +185,13 @@ with Live(dir="dvclive", report="html") as live:
     live.log_param("lr",          LEARNING_RATE)
     live.log_param("num_classes", NUM_CLASSES)
     live.log_param("n_features",  n_features)
+    live.log_param("model_type",  "MLP")
 
     history = model.fit(
-        X_train_cnn, y_train,
+        X_train_scaled, y_train,
         batch_size=BATCH_SIZE,
         epochs=EPOCHS,
-        validation_data=(X_test_cnn, y_test),
+        validation_data=(X_test_scaled, y_test),
         callbacks=callbacks,
         verbose=1
     )
@@ -253,21 +238,19 @@ history_dict = {
     "accuracy":     [float(v) for v in history.history["accuracy"]],
     "val_accuracy": [float(v) for v in history.history["val_accuracy"]],
 }
-
 with open("artifacts/training_history.json", "w") as f:
     json.dump(history_dict, f, indent=2)
 with open("artifacts/metrics/training_history.json", "w") as f:
     json.dump(history_dict, f, indent=2)
-print("Saved: artifacts/training_history.json")
 
 # ── Quick test metrics ────────────────────────────────────────────────────────
-y_pred_proba = model.predict(X_test_cnn, verbose=0)
+y_pred_proba = model.predict(X_test_scaled, verbose=0)
 y_pred       = np.argmax(y_pred_proba, axis=1)
 test_acc     = float(accuracy_score(y_test, y_pred))
 
 print(f"\nTest Accuracy: {test_acc:.4f}")
 print(classification_report(y_test, y_pred, target_names=le.classes_,
-                            labels=list(range(len(le.classes_))), zero_division=0))
+                             labels=list(range(NUM_CLASSES)), zero_division=0))
 
 test_metrics = {
     "accuracy":  test_acc,
@@ -275,23 +258,22 @@ test_metrics = {
 }
 with open("artifacts/metrics/test_metrics.json", "w") as f:
     json.dump(test_metrics, f, indent=2)
-print("Saved: artifacts/metrics/test_metrics.json")
 
 # ── Model metadata ────────────────────────────────────────────────────────────
 model_info = {
-    "model_type":           "1D CNN Classifier",
-    "task":                 "obesity level classification",
-    "num_classes":          NUM_CLASSES,
-    "class_names":          list(le.classes_),
-    "n_features":           n_features,
-    "n_train_samples":      int(X_train.shape[0]),
-    "n_test_samples":       int(X_test.shape[0]),
-    "categorical_cols":     CAT_COLS,
+    "model_type":            "MLP Classifier",
+    "task":                  "obesity level classification",
+    "num_classes":           NUM_CLASSES,
+    "class_names":           list(le.classes_),
+    "n_features":            n_features,
+    "n_train_samples":       int(X_train.shape[0]),
+    "n_test_samples":        int(X_test.shape[0]),
+    "categorical_cols":      CAT_COLS,
     "constant_cols_dropped": len(constant_cols),
-    "training_completed":   datetime.now().isoformat(),
+    "training_completed":    datetime.now().isoformat(),
     "hyperparameters": {
-        "epochs": EPOCHS, "batch_size": BATCH_SIZE,
-        "learning_rate": LEARNING_RATE, "cnn_filters": CNN_FILTERS
+        "epochs": EPOCHS, "batch_size": BATCH_SIZE, "learning_rate": LEARNING_RATE,
+        "dense_units": [DENSE_1, DENSE_2, DENSE_3, DENSE_4]
     },
     "test_performance": test_metrics
 }

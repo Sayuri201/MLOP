@@ -42,20 +42,20 @@ for path in required:
 
 # ── Load model, encoder, and test data ───────────────────────────────────────
 print("Loading model and test data...")
-model      = tf.keras.models.load_model("models/model.keras")
-X_test_cnn = np.load("artifacts/data/X_test.npy")
-y_test     = np.load("artifacts/data/y_test.npy")
+model  = tf.keras.models.load_model("models/model.keras")
+X_test = np.load("artifacts/data/X_test.npy")
+y_test = np.load("artifacts/data/y_test.npy")
 le         = joblib.load("artifacts/preprocessing/encoder.pkl")
 class_names = list(le.classes_)
 
-print(f"X_test_cnn: {X_test_cnn.shape}  |  y_test: {y_test.shape}")
+print(f"X_test: {X_test.shape}  |  y_test: {y_test.shape}")
 print(f"Classes: {class_names}")
 
 with open("artifacts/training_history.json") as f:
     history_dict = json.load(f)
 
 # ── Predictions ───────────────────────────────────────────────────────────────
-y_pred_proba = model.predict(X_test_cnn, verbose=0)
+y_pred_proba = model.predict(X_test, verbose=0)
 y_pred       = np.argmax(y_pred_proba, axis=1)
 
 # ── Classification metrics ────────────────────────────────────────────────────
@@ -226,9 +226,8 @@ for col in feature_columns:
 test_data = test_data[feature_columns]
 test_data = test_data.apply(pd.to_numeric, errors="coerce").fillna(0)
 
-# Scale and reshape
+# Scale
 X_sub = scaler.transform(test_data.values) if scaler else test_data.values
-X_sub = X_sub.reshape(X_sub.shape[0], X_sub.shape[1], 1)
 
 preds_sub    = model.predict(X_sub, verbose=0)
 preds_labels = le.inverse_transform(np.argmax(preds_sub, axis=1))
