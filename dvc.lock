@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 1a959911866ae6d4727030441469d4f3
+      md5: 7c24c1457d78e3921cec31016af70f74
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: aa470d19bdb0e4d8b43522a73bfe9bd3
+      md5: e1ab699370d45dab72636e8ba0a73320
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 2f1d379f5b014a467b473f261fcbc945
-      size: 4846
+      md5: 25f96970e99bffc84bc361b65fb0ace6
+      size: 6403
     - path: models/model.keras
       hash: md5
-      md5: d900c514912940f156d9cd1aa05e488c
+      md5: 0d423cf3f9c0ae1faad3116a70854649
       size: 643252
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 2f1d379f5b014a467b473f261fcbc945
-      size: 4846
+      md5: 25f96970e99bffc84bc361b65fb0ace6
+      size: 6403
     - path: models/model.keras
       hash: md5
-      md5: d900c514912940f156d9cd1aa05e488c
+      md5: 0d423cf3f9c0ae1faad3116a70854649
       size: 643252
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: e267db1a22804aa323cea338f8a3b0bc
-      size: 155183
+      md5: 746ec35766daa031ad4bedec52151124
+      size: 154894
     - path: metrics.json
       hash: md5
-      md5: 7b3d641c60d68dc73ac230037601cf50
-      size: 826
+      md5: edf7e8699ca986d373eb40f6d4f322f4
+      size: 813
     - path: per_class_f1.png
       hash: md5
-      md5: e1798bbab55f0b20f3fd823acf2af4cf
-      size: 104527
+      md5: f3b6fc2ab5280fa2c08c6ececa81dfaf
+      size: 104651
     - path: training_history.png
       hash: md5
-      md5: 1d4f37536d7952c6aaea95b545885633
-      size: 154716
+      md5: b85b66dbafeb200b2bc5f62c01545d1a
+      size: 153678
