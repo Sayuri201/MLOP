@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 7c24c1457d78e3921cec31016af70f74
+      md5: 88b974a1c9be931421c134c5580152da
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: e1ab699370d45dab72636e8ba0a73320
+      md5: 8853d2e97e8ba582a89adeaaea54ad90
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,12 +91,12 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 25f96970e99bffc84bc361b65fb0ace6
-      size: 6403
+      md5: 293c01afc7c1d7523a89b1bac2309afb
+      size: 5039
     - path: models/model.keras
       hash: md5
-      md5: 0d423cf3f9c0ae1faad3116a70854649
-      size: 643252
+      md5: 2c4d7959c98985d92a930b097366cd71
+      size: 643251
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -126,12 +126,12 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 25f96970e99bffc84bc361b65fb0ace6
-      size: 6403
+      md5: 293c01afc7c1d7523a89b1bac2309afb
+      size: 5039
     - path: models/model.keras
       hash: md5
-      md5: 0d423cf3f9c0ae1faad3116a70854649
-      size: 643252
+      md5: 2c4d7959c98985d92a930b097366cd71
+      size: 643251
     - path: params.yaml
       hash: md5
       md5: 035a4b1ded5b56b93d2f3255359e5d04
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 746ec35766daa031ad4bedec52151124
+      md5: 963f2457e759bec26fe5fa00cc31a137
       size: 154894
     - path: metrics.json
       hash: md5
-      md5: edf7e8699ca986d373eb40f6d4f322f4
-      size: 813
+      md5: c9f6a7c0ece8cb9c2df8be72ca1cd0b6
+      size: 810
     - path: per_class_f1.png
       hash: md5
-      md5: f3b6fc2ab5280fa2c08c6ececa81dfaf
-      size: 104651
+      md5: b02082ef171133ac20d5719de162a9a0
+      size: 103841
     - path: training_history.png
       hash: md5
-      md5: b85b66dbafeb200b2bc5f62c01545d1a
-      size: 153678
+      md5: e0c3fb5f4ab3a6bed6c21584973c042a
+      size: 149989
