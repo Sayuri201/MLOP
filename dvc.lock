@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 356c14433b7ba5c073f889803c2cecff
+      md5: e6aebe51b2a08931fcfd6e0ff6fa571d
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: 1be13342b0e73c62fd8eeb5941586446
+      md5: 4c161ac28815d114328509a77627b5b5
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 480e91151ab5d0cca845898d7eff9977
-      size: 4846
+      md5: aa30d8a3417d8e8ab723c5ad913ae040
+      size: 4656
     - path: models/model.keras
       hash: md5
-      md5: 5b960bdaf6dc11c8ac23d5f4761d74d2
+      md5: 003665aa9ca13c731695657f6a231910
       size: 643251
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 480e91151ab5d0cca845898d7eff9977
-      size: 4846
+      md5: aa30d8a3417d8e8ab723c5ad913ae040
+      size: 4656
     - path: models/model.keras
       hash: md5
-      md5: 5b960bdaf6dc11c8ac23d5f4761d74d2
+      md5: 003665aa9ca13c731695657f6a231910
       size: 643251
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 0cb99403322fa07542eb54fecba3733e
-      size: 154656
+      md5: dcc5614bac39cd9e2a33ada21c627a50
+      size: 154898
     - path: metrics.json
       hash: md5
-      md5: bd1d0b0f0833d6663a10e67d573ee43d
-      size: 810
+      md5: 64d83b7bcbf0faa69f565ac49cda4eb4
+      size: 814
     - path: per_class_f1.png
       hash: md5
-      md5: ce1670c18a221709df6d10d0fd296882
-      size: 104669
+      md5: 13ca6c7ea0985517f4874c6fb65bfb8a
+      size: 104570
     - path: training_history.png
       hash: md5
-      md5: b1f65b347283c18e05938166394e7109
-      size: 152075
+      md5: c9c60100c88059c3b99cfafeeda825c2
+      size: 147882
