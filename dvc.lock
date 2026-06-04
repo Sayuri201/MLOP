@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 37807b7a1c042efbd07aba5a17564e91
+      md5: 542718b2a9383f488570946bde900ab4
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: b980999c5a8048e86dc8bb79ddc7ca75
+      md5: b977b5bdde45ad32716226700baecfdc
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: dfb0581f8c8bdf58dfdae709b2d917d9
-      size: 5915
+      md5: 85feb3a13c63eecc9baa4ae3d3092dc6
+      size: 6426
     - path: models/model.keras
       hash: md5
-      md5: a0d2773565bf69ce8ed0fedd7287bcfa
+      md5: 0b1ea832b0ea941b3d6c9fdec9b19b53
       size: 643252
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: dfb0581f8c8bdf58dfdae709b2d917d9
-      size: 5915
+      md5: 85feb3a13c63eecc9baa4ae3d3092dc6
+      size: 6426
     - path: models/model.keras
       hash: md5
-      md5: a0d2773565bf69ce8ed0fedd7287bcfa
+      md5: 0b1ea832b0ea941b3d6c9fdec9b19b53
       size: 643252
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 8f393b91fa552571e8b689bd7dd52e21
-      size: 154666
+      md5: 93681906e2b64a816aec424127373bb3
+      size: 154713
     - path: metrics.json
       hash: md5
-      md5: 4a8a71e0ed78d45a01000772aafb12b0
+      md5: de35b26c8fed9c1fe95f0366dd598042
       size: 815
     - path: per_class_f1.png
       hash: md5
-      md5: a21c24c4591bd7453874cf1ac5d2a59f
-      size: 103566
+      md5: f5aea8f151f171cefd6287c18b9bec49
+      size: 104551
     - path: training_history.png
       hash: md5
-      md5: 0fb7525f762243f29d99f6bee89dc924
-      size: 152265
+      md5: 06fc9098d653568cc28d5fc587fe1d64
+      size: 149538
