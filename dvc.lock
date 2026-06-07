@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 9509c4f30f6ba55aa5eb429b9aa81992
+      md5: 339d079177cb75927b00c683d7ca83d3
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: ddffcb3b10a4bbc23fad4468fb93cf8a
+      md5: 2f83e9bfab89013e5ee5f83553e5567b
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 606042e7249b24378a7cd2c4532bf831
-      size: 5237
+      md5: 4f4916acbd76c41e97601f4d4d90b1dc
+      size: 6408
     - path: models/model.keras
       hash: md5
-      md5: 71d3245b1f749f8893f471c4ce921dee
+      md5: 650c8d6c0ae1226a2d061af09bc17df6
       size: 643252
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 606042e7249b24378a7cd2c4532bf831
-      size: 5237
+      md5: 4f4916acbd76c41e97601f4d4d90b1dc
+      size: 6408
     - path: models/model.keras
       hash: md5
-      md5: 71d3245b1f749f8893f471c4ce921dee
+      md5: 650c8d6c0ae1226a2d061af09bc17df6
       size: 643252
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 8065cffc1cecf1f13e55c767cbd93f04
-      size: 154413
+      md5: 689e6ef54de36a6b5391a8285a3993c4
+      size: 154068
     - path: metrics.json
       hash: md5
-      md5: 9ce0b065c6fff0e341b506bfa4334555
-      size: 813
+      md5: d7535fb340d6fba5a8d9112ed20d4a3a
+      size: 815
     - path: per_class_f1.png
       hash: md5
-      md5: bb16b8f9d1033cd6d0bc833955402d56
-      size: 104059
+      md5: 44ec065e073e6b638aada429d3e0ed81
+      size: 101080
     - path: training_history.png
       hash: md5
-      md5: dcf13fc495e2ebd6c2a352c8de70f98d
-      size: 144836
+      md5: 0468d0de98058020ed73a3968d810d96
+      size: 151287
