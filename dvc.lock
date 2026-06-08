@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 339d079177cb75927b00c683d7ca83d3
+      md5: a7d6e9e61298eb93c06833c545a4e664
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: 2f83e9bfab89013e5ee5f83553e5567b
+      md5: e6a77445b085af485c1ed2a18a4db073
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 4f4916acbd76c41e97601f4d4d90b1dc
-      size: 6408
+      md5: 39edde65f63f668795dce0d37b3050ab
+      size: 4848
     - path: models/model.keras
       hash: md5
-      md5: 650c8d6c0ae1226a2d061af09bc17df6
+      md5: bc817f790434325eed807e1575ae6400
       size: 643252
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 4f4916acbd76c41e97601f4d4d90b1dc
-      size: 6408
+      md5: 39edde65f63f668795dce0d37b3050ab
+      size: 4848
     - path: models/model.keras
       hash: md5
-      md5: 650c8d6c0ae1226a2d061af09bc17df6
+      md5: bc817f790434325eed807e1575ae6400
       size: 643252
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 689e6ef54de36a6b5391a8285a3993c4
-      size: 154068
+      md5: 396a239a9758f3714bd0596eacaa8a29
+      size: 154427
     - path: metrics.json
       hash: md5
-      md5: d7535fb340d6fba5a8d9112ed20d4a3a
-      size: 815
+      md5: a12953ab5d4fa577a43c1b3313ca8289
+      size: 827
     - path: per_class_f1.png
       hash: md5
-      md5: 44ec065e073e6b638aada429d3e0ed81
-      size: 101080
+      md5: 19b36b759aba6965b1594988b9c80e5f
+      size: 104198
     - path: training_history.png
       hash: md5
-      md5: 0468d0de98058020ed73a3968d810d96
-      size: 151287
+      md5: 10481629ca0a30d115132cecfcd56553
+      size: 153215
