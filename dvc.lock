@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: de68ce9abc0dd01f2c9d9a37a3b3de17
+      md5: 13d8a41a46029fc30ca19f6028cd9d37
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: ac731c428eaa5f0ab211214da884da21
+      md5: 0413510b01640f5c57e6c68c25f8fd20
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 8d5d249b6079b0232abecd9bc5d6e70a
-      size: 5046
+      md5: 07a262d06e2c08d34f14d8a69afd2021
+      size: 6602
     - path: models/model.keras
       hash: md5
-      md5: 38234e99189c86121dc472f1b669cd97
+      md5: e8b98788ffabe880be4e061522eb95d0
       size: 643251
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 8d5d249b6079b0232abecd9bc5d6e70a
-      size: 5046
+      md5: 07a262d06e2c08d34f14d8a69afd2021
+      size: 6602
     - path: models/model.keras
       hash: md5
-      md5: 38234e99189c86121dc472f1b669cd97
+      md5: e8b98788ffabe880be4e061522eb95d0
       size: 643251
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 11c008246a96fe367bafdb1f535a47e7
-      size: 154596
+      md5: 92ae1386cc9cbc49550d5643fac41400
+      size: 155328
     - path: metrics.json
       hash: md5
-      md5: dffeacd229cd98e98196909aa248492e
-      size: 813
+      md5: 6e2c52569d0ba681904df5e9b682572c
+      size: 814
     - path: per_class_f1.png
       hash: md5
-      md5: 74567fef354fa5a0c73348644f46fd4b
-      size: 102148
+      md5: c9cb5a43ec8a390e2b8a2ab3524bf5f7
+      size: 103358
     - path: training_history.png
       hash: md5
-      md5: 2acb678a084a8841b575b42c67ed027f
-      size: 149622
+      md5: f3177589740873dd929b9104087be1fe
+      size: 156677
