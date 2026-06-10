@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: c74199d25ada5e6f12b957b728724c6f
+      md5: f9531ddfb5d8cc06773662e1229d4833
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: f43b40694e97ef9acf9debadf87421b4
+      md5: bc710604de9750a6d4c612e772fd8f49
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: f6d62a0e5d8cc6dafdb3ee51133a5e75
-      size: 6219
+      md5: 4d6e6c328a18c47c39e9cf69b1b2a8af
+      size: 6022
     - path: models/model.keras
       hash: md5
-      md5: 72acefcea3d68f41c4dc428ffaa58d2c
+      md5: ffb4829ba002f9c9c254695c74ad248a
       size: 643251
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: f6d62a0e5d8cc6dafdb3ee51133a5e75
-      size: 6219
+      md5: 4d6e6c328a18c47c39e9cf69b1b2a8af
+      size: 6022
     - path: models/model.keras
       hash: md5
-      md5: 72acefcea3d68f41c4dc428ffaa58d2c
+      md5: ffb4829ba002f9c9c254695c74ad248a
       size: 643251
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: adf84e4a8916479f45f7c425cf9d0e25
-      size: 155096
+      md5: 689e6ef54de36a6b5391a8285a3993c4
+      size: 154068
     - path: metrics.json
       hash: md5
-      md5: d6f702c27590b383cab44648634bb166
-      size: 814
+      md5: 6f86830db84c0f09f0a68ca919c49260
+      size: 812
     - path: per_class_f1.png
       hash: md5
-      md5: f7fedfc41999bc139364cc40f83e0d26
-      size: 104677
+      md5: 44ec065e073e6b638aada429d3e0ed81
+      size: 101080
     - path: training_history.png
       hash: md5
-      md5: d04388ee36f698c85de2f42c04d0647e
-      size: 153738
+      md5: 538c3ff578b1faf2d7d69186a5343a63
+      size: 151097
