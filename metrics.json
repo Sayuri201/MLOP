@@ -1,27 +1,27 @@
 {
-  "timestamp": "2026-06-12T04:42:08.568663",
+  "timestamp": "2026-06-12T15:30:11.022759",
   "model_type": "1D CNN Classifier",
   "task": "obesity level classification",
   "test_size": 0.2,
-  "final_epoch": 62,
+  "final_epoch": 71,
   "metrics": {
-    "accuracy": 0.9757869249394673,
-    "f1_macro": 0.9756727120525351,
-    "f1_weighted": 0.9756727120525351,
+    "accuracy": 0.9830508474576272,
+    "f1_macro": 0.9829829847247948,
+    "f1_weighted": 0.9829829847247948,
     "f1_per_class": {
-      "Insufficient_Weight": 0.9672131147540983,
-      "Normal_Weight": 0.9391304347826087,
-      "Obesity_Type_I": 0.9914529914529915,
-      "Obesity_Type_II": 0.9915966386554622,
+      "Insufficient_Weight": 0.9752066115702479,
+      "Normal_Weight": 0.9565217391304348,
+      "Obesity_Type_I": 1.0,
+      "Obesity_Type_II": 1.0,
       "Obesity_Type_III": 1.0,
-      "Overweight_Level_I": 0.9572649572649573,
+      "Overweight_Level_I": 0.9661016949152542,
       "Overweight_Level_II": 0.9830508474576272
     }
   },
   "training_history": {
-    "final_train_loss": 0.0628955066204071,
-    "final_val_loss": 0.0595129020512104,
-    "final_train_accuracy": 0.9782082438468933,
-    "final_val_accuracy": 0.9782082438468933
+    "final_train_loss": 0.05387834459543228,
+    "final_val_loss": 0.08570089936256409,
+    "final_train_accuracy": 0.9824455380439758,
+    "final_val_accuracy": 0.9830508232116699
   }
 }

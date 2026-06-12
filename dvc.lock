@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 68de5974d806bf0bfa3540894011d3fb
+      md5: be3e99e466ecf2de7f363c57c2a83663
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: fa5309f2ee6751a0a75aea38ea54a84f
+      md5: 14241f4e7f6ca0ed7ff6457bc57fdc91
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 37ebd43298dddd9cad1c2c534bf67dd5
-      size: 6123
+      md5: bcca6e291efcfbc1553ad22521ea169a
+      size: 6982
     - path: models/model.keras
       hash: md5
-      md5: f7c940fa0eb72d578e0c91eb78935194
+      md5: e73bdb0698a845802497d5a49734b24f
       size: 643252
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 37ebd43298dddd9cad1c2c534bf67dd5
-      size: 6123
+      md5: bcca6e291efcfbc1553ad22521ea169a
+      size: 6982
     - path: models/model.keras
       hash: md5
-      md5: f7c940fa0eb72d578e0c91eb78935194
+      md5: e73bdb0698a845802497d5a49734b24f
       size: 643252
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 6b2edb693bf7ac97ec7b08f1d8afed53
-      size: 158602
+      md5: 89d05060d7622bdc24420fb9814a2eff
+      size: 158402
     - path: metrics.json
       hash: md5
-      md5: 256ad5fbbc54312fb3f15ea803600098
-      size: 842
+      md5: 5901e8920b5df030c06f76e61728d26a
+      size: 814
     - path: per_class_f1.png
       hash: md5
-      md5: 0c3f4123ab9a5c0b431e24be23071969
-      size: 88569
+      md5: 7dbc2a1e28afba047fd9d3207a5f7a65
+      size: 87850
     - path: training_history.png
       hash: md5
-      md5: 76c8611b84df623b976a58f0a99801bc
-      size: 142981
+      md5: 69a06308c736b9504b09c1b597a081a0
+      size: 149078
