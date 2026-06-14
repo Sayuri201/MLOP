@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: ce60ce56e52dbe025ba87901b4238773
+      md5: e90703e711c7aff7a929fc2ea68cdc70
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: 93dca083fbf072727d069029ccff0b32
+      md5: 98ec3e8890c4935d97861ae49a16fb10
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: d0f153a860175c37ade94aec087dfa38
-      size: 5036
+      md5: 5a859ed8edc06b0f48c177bb174e9946
+      size: 5333
     - path: models/model.keras
       hash: md5
-      md5: b5816bcbd3bc06f477709ad709d41d2f
+      md5: d8e5aa966d3198c2c635a6ec02eb482a
       size: 643251
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: d0f153a860175c37ade94aec087dfa38
-      size: 5036
+      md5: 5a859ed8edc06b0f48c177bb174e9946
+      size: 5333
     - path: models/model.keras
       hash: md5
-      md5: b5816bcbd3bc06f477709ad709d41d2f
+      md5: d8e5aa966d3198c2c635a6ec02eb482a
       size: 643251
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 4614c8d633f93ec5c0d0a1957d6c6ad3
-      size: 157910
+      md5: f5614ee5ad01a2f9f10ad5b7ccfc0633
+      size: 159981
     - path: metrics.json
       hash: md5
-      md5: 55c4ecab7fcc547f708521797d00ec9f
-      size: 815
+      md5: 2b82883961ac105910bd3f70c9f434bf
+      size: 812
     - path: per_class_f1.png
       hash: md5
-      md5: 9f445cd0d6344962eb046be6850b4814
-      size: 86179
+      md5: 48a7c63c42361b28e35b6f4b48aed814
+      size: 87208
     - path: training_history.png
       hash: md5
-      md5: dcabe45fd59e547fbfb46b047610cd43
-      size: 149996
+      md5: bb3ed9ee6021ef74d4782d6bdc54c7f0
+      size: 144025
