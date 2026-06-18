@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 34e86ca287c0c862789ec8d8f62cff2a
+      md5: 19d458805d7ffbf615eee5062e302d75
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: 12872242ee62d53c2b3db874cdf43721
+      md5: 2fb92997128d1f18658ab44040b193a0
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: f54c34028e4a2f0e06fa1f465caca205
-      size: 4461
+      md5: 4f70012e85ede89b7212068b1d4bf390
+      size: 4944
     - path: models/model.keras
       hash: md5
-      md5: 31d111d54eb12c55d7daa234aa743f1f
+      md5: 6303ad1d1ac3533f04b401dfbd964d0d
       size: 643251
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: f54c34028e4a2f0e06fa1f465caca205
-      size: 4461
+      md5: 4f70012e85ede89b7212068b1d4bf390
+      size: 4944
     - path: models/model.keras
       hash: md5
-      md5: 31d111d54eb12c55d7daa234aa743f1f
+      md5: 6303ad1d1ac3533f04b401dfbd964d0d
       size: 643251
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: d0a9dcbcdc6f66a03a2fc42aaa212d71
-      size: 159162
+      md5: 721350d6a29ddac5f0c85a88de153a65
+      size: 159145
     - path: metrics.json
       hash: md5
-      md5: 781f542ad847f4fcbb3030f5e45dac8e
-      size: 828
+      md5: 25b81c4fa71af52721c537b31682aa15
+      size: 814
     - path: per_class_f1.png
       hash: md5
-      md5: 9e0226b6ac3c5fbd96461d32da885f57
-      size: 88251
+      md5: 9ddfec5d570d144972516af2a5c99d72
+      size: 86780
     - path: training_history.png
       hash: md5
-      md5: 9147c21919509a204814bd6eacc693d9
-      size: 143682
+      md5: b707be915b83d782a53ef061f6ae8d19
+      size: 148046
