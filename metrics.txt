@@ -1,22 +1,22 @@
 =======================================================
 OBESITY CLASSIFICATION — MODEL METRICS
 =======================================================
-Accuracy    : 0.9734
-F1 Macro    : 0.9731
-F1 Weighted : 0.9731
+Accuracy    : 0.9685
+F1 Macro    : 0.9686
+F1 Weighted : 0.9686
 =======================================================
 
 CLASSIFICATION REPORT
 =======================================================
                      precision    recall  f1-score   support
 
-Insufficient_Weight       0.91      1.00      0.95        59
-      Normal_Weight       0.98      0.86      0.92        59
-     Obesity_Type_I       1.00      1.00      1.00        59
+Insufficient_Weight       0.97      1.00      0.98        59
+      Normal_Weight       0.98      0.92      0.95        59
+     Obesity_Type_I       1.00      0.95      0.97        59
     Obesity_Type_II       1.00      1.00      1.00        59
    Obesity_Type_III       1.00      1.00      1.00        59
- Overweight_Level_I       0.95      0.97      0.96        59
-Overweight_Level_II       0.98      0.98      0.98        59
+ Overweight_Level_I       0.93      0.93      0.93        59
+Overweight_Level_II       0.91      0.98      0.94        59
 
            accuracy                           0.97       413
           macro avg       0.97      0.97      0.97       413
@@ -24,7 +24,7 @@ Overweight_Level_II       0.98      0.98      0.98        59
 
 TRAINING HISTORY
 =======================================================
-Final Train Loss    : 0.0782
-Final Val Loss      : 0.0742
-Final Train Accuracy: 0.9715
-Final Val Accuracy  : 0.9758
+Final Train Loss    : 0.0591
+Final Val Loss      : 0.0901
+Final Train Accuracy: 0.9812
+Final Val Accuracy  : 0.9613
