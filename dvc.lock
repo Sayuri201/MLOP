@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: a5ec7d677cadd50baeec5e4653496bae
+      md5: c112b12b09d99443c56d2d2e0d270858
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: 614ece97f4cc6a08982bd74a795636c3
+      md5: 8d259eee8b0c7211dccfeae93585c436
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: bb9e0e7f57723c32db984b995f66f6be
-      size: 5043
+      md5: 4b69a3ff25753dd7c8f4ad6c8dd05b75
+      size: 5430
     - path: models/model.keras
       hash: md5
-      md5: bdcf0fa9d8268294d673ed178967fc91
+      md5: acd1545f1356539b3c9dab6a53b69479
       size: 643252
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: bb9e0e7f57723c32db984b995f66f6be
-      size: 5043
+      md5: 4b69a3ff25753dd7c8f4ad6c8dd05b75
+      size: 5430
     - path: models/model.keras
       hash: md5
-      md5: bdcf0fa9d8268294d673ed178967fc91
+      md5: acd1545f1356539b3c9dab6a53b69479
       size: 643252
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: a57c5e96ddbc9ffa4d4679720012add0
-      size: 158860
+      md5: 64af236a8b71e56a611b2029ec06a1a1
+      size: 159339
     - path: metrics.json
       hash: md5
-      md5: 16e9d4df00f44714c14057069097e483
-      size: 826
+      md5: 292f6c1998be1c98a79d3eae87ffb463
+      size: 812
     - path: per_class_f1.png
       hash: md5
-      md5: 4c38cec6ecd5bf53a19d14df77d2d755
-      size: 88508
+      md5: 0e92386f7a3ca9c5b5bc13e7f21d03ff
+      size: 87301
     - path: training_history.png
       hash: md5
-      md5: 37b1488af67e6abaf992f3aa89011f76
-      size: 155158
+      md5: a91bfd5475c9ce7554444ed6abf2f7e7
+      size: 148291
