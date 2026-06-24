@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 01b45a8326250b2681a952862e16b416
+      md5: 73a4fe5bcb85d1601313941b5dc9f3c4
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: a2dd8f45ef68ae91704b07f018ae84d1
+      md5: 63cfb66f3a4bcb427ef38d5cd1edc49e
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: f93dbebb95ab86d6cdb601bab6839ebd
-      size: 7002
+      md5: 286b2a9a0190e8eb6470e3d800acae4e
+      size: 6213
     - path: models/model.keras
       hash: md5
-      md5: a3bd89530038201d08b4d1e731a744ef
+      md5: a85f80228449612693d7266722f481f9
       size: 643252
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: f93dbebb95ab86d6cdb601bab6839ebd
-      size: 7002
+      md5: 286b2a9a0190e8eb6470e3d800acae4e
+      size: 6213
     - path: models/model.keras
       hash: md5
-      md5: a3bd89530038201d08b4d1e731a744ef
+      md5: a85f80228449612693d7266722f481f9
       size: 643252
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: 80f7c07ccf1c8ddc82a6f645c40c7cee
-      size: 159073
+      md5: c49f38b5a6500d8d4012beb3db2d01c7
+      size: 158775
     - path: metrics.json
       hash: md5
-      md5: 1eda76f5a19273acbb29731cfe122521
-      size: 815
+      md5: 038b05523771b3461a9e5f972c452dfa
+      size: 812
     - path: per_class_f1.png
       hash: md5
-      md5: 52b76b3acde9296793b33d75970bb545
-      size: 87179
+      md5: f21c90b7b64881bcf1e23a5ad180ec40
+      size: 88016
     - path: training_history.png
       hash: md5
-      md5: fe9ef169991137ac0d8eb829d457f5d6
-      size: 149241
+      md5: 9bb8f9d97510a43ad91ff78c30be508c
+      size: 144112
