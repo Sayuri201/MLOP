@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: 5ede7a2974aad564738c15252f8c9deb
+      md5: 04e0056a093791761c522803d320f48b
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: fffedf1bdd269b82fc82d45459dbb41b
+      md5: 15bbd3697e90622b9f75bd959e3c6496
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,12 +91,12 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 2abb8070b9b824df5ed75be7d9e0c93f
-      size: 6118
+      md5: c5a106e54bdbca48cdb337b6202a810d
+      size: 5719
     - path: models/model.keras
       hash: md5
-      md5: 9500dfab6db4bb348ded06a4c55d13d4
-      size: 643252
+      md5: 2acddbf7b81d2adc77111a710870c755
+      size: 643456
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -126,12 +126,12 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: 2abb8070b9b824df5ed75be7d9e0c93f
-      size: 6118
+      md5: c5a106e54bdbca48cdb337b6202a810d
+      size: 5719
     - path: models/model.keras
       hash: md5
-      md5: 9500dfab6db4bb348ded06a4c55d13d4
-      size: 643252
+      md5: 2acddbf7b81d2adc77111a710870c755
+      size: 643456
     - path: params.yaml
       hash: md5
       md5: 035a4b1ded5b56b93d2f3255359e5d04
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: f5614ee5ad01a2f9f10ad5b7ccfc0633
-      size: 159981
+      md5: e471d66d6e20d2aaefe330a38a85b38d
+      size: 159386
     - path: metrics.json
       hash: md5
-      md5: 5e909782f9cf8ba14b543d8418d63294
-      size: 814
+      md5: 27a878272d57f931a5880f3a96d488e9
+      size: 811
     - path: per_class_f1.png
       hash: md5
-      md5: 48a7c63c42361b28e35b6f4b48aed814
-      size: 87208
+      md5: 6a62a1245190d72459da933f57f08c33
+      size: 86561
     - path: training_history.png
       hash: md5
-      md5: 7d240f1148533347e00182ebbdf9b6d9
-      size: 146611
+      md5: 525bc888a34089c84455a9276b200f5d
+      size: 144446

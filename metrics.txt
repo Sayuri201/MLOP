@@ -10,12 +10,12 @@ CLASSIFICATION REPORT
 =======================================================
                      precision    recall  f1-score   support
 
-Insufficient_Weight       0.95      1.00      0.98        59
+Insufficient_Weight       0.98      1.00      0.99        59
       Normal_Weight       0.98      0.92      0.95        59
      Obesity_Type_I       1.00      1.00      1.00        59
     Obesity_Type_II       1.00      1.00      1.00        59
    Obesity_Type_III       1.00      1.00      1.00        59
- Overweight_Level_I       0.95      0.98      0.97        59
+ Overweight_Level_I       0.92      0.98      0.95        59
 Overweight_Level_II       1.00      0.98      0.99        59
 
            accuracy                           0.98       413
@@ -24,7 +24,7 @@ Overweight_Level_II       1.00      0.98      0.99        59
 
 TRAINING HISTORY
 =======================================================
-Final Train Loss    : 0.0508
-Final Val Loss      : 0.0688
-Final Train Accuracy: 0.9861
-Final Val Accuracy  : 0.9831
+Final Train Loss    : 0.0454
+Final Val Loss      : 0.0758
+Final Train Accuracy: 0.9843
+Final Val Accuracy  : 0.9782
