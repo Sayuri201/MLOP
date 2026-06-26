@@ -63,11 +63,11 @@ stages:
       size: 201
     - path: artifacts/metadata/model_info.json
       hash: md5
-      md5: e4203bc952f3e9ef59c24bec4f953b8d
+      md5: 73f5130e0ec07f981f5ce0dc8d2067b2
       size: 749
     - path: artifacts/metrics/test_metrics.json
       hash: md5
-      md5: 0e2b2bebf8f6da57f1c4a5c52a2a4d83
+      md5: d75378bffb26edcd431c011049d49336
       size: 81
     - path: artifacts/preprocessing/class_names.json
       hash: md5
@@ -91,11 +91,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: da13627a6f7c29029e3f2762723b30bd
-      size: 6688
+      md5: 1ed3748b890e69ce437a3a7fc9551796
+      size: 6198
     - path: models/model.keras
       hash: md5
-      md5: 949b7e03a42b6edb3fa05feb1b39f223
+      md5: e2ae974db73e5662bbd7891465004d70
       size: 643457
   evaluate:
     cmd: python src/evaluate.py
@@ -126,11 +126,11 @@ stages:
       size: 975
     - path: artifacts/training_history.json
       hash: md5
-      md5: da13627a6f7c29029e3f2762723b30bd
-      size: 6688
+      md5: 1ed3748b890e69ce437a3a7fc9551796
+      size: 6198
     - path: models/model.keras
       hash: md5
-      md5: 949b7e03a42b6edb3fa05feb1b39f223
+      md5: e2ae974db73e5662bbd7891465004d70
       size: 643457
     - path: params.yaml
       hash: md5
@@ -151,17 +151,17 @@ stages:
     outs:
     - path: confusion_matrix.png
       hash: md5
-      md5: ab3ab5a659216552777fc065c8944600
-      size: 159449
+      md5: 80f7c07ccf1c8ddc82a6f645c40c7cee
+      size: 159073
     - path: metrics.json
       hash: md5
-      md5: 202306d104102871f48f32433d08f03b
-      size: 813
+      md5: 2b675ecb8618dc87db80900f796f06a7
+      size: 812
     - path: per_class_f1.png
       hash: md5
-      md5: a747a9b08b479e9c87cd6b35590b013c
-      size: 86735
+      md5: 52b76b3acde9296793b33d75970bb545
+      size: 87179
     - path: training_history.png
       hash: md5
-      md5: 86c3420f173a40f7ae3a8defc0a1a307
-      size: 146343
+      md5: b0f827cfc072b4a50f126b6a73622cac
+      size: 146959
